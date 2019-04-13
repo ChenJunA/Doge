@@ -17,107 +17,32 @@
                     </div>
                      <Divider style="margin-top:15px"/>
                      
-                    <div class="doge_card">
-                        <div class="doge_card_left">
-                            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
-                        </div>
-
-                        <div class="doge_card_right">
-                            <div>
-                                <div>
-                                    title
-                                </div>
-                                <Divider />
-                                <div>
-                                    descripe
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <dogeCard></dogeCard>
                     <Divider />
 
-                    <div class="doge_card">
-                        <div class="doge_card_left">
-                            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
-                        </div>
-
-                        <div class="doge_card_right">
-                            <div>
-                                <div>
-                                    title
-                                </div>
-                                <Divider />
-                                <div>
-                                    descripe
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <dogeCard></dogeCard>
                     <Divider />
 
-                    <div class="doge_card">
-                        <div class="doge_card_left">
-                            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
-                        </div>
-
-                        <div class="doge_card_right">
-                            <div>
-                                <div>
-                                    title
-                                </div>
-                                <Divider />
-                                <div>
-                                    descripe
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <dogeCard></dogeCard>
                     <Divider />
 
-                    <div class="doge_card">
-                        <div class="doge_card_left">
-                            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
-                        </div>
-
-                        <div class="doge_card_right">
-                            <div>
-                                <div>
-                                    title
-                                </div>
-                                <Divider />
-                                <div>
-                                    descripe
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <dogeCard></dogeCard>
                     <Divider />
 
-                    <div class="doge_card">
-                        <div class="doge_card_left">
-                            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
-                        </div>
-
-                        <div class="doge_card_right">
-                            <div>
-                                <div>
-                                    title
-                                </div>
-                                <Divider />
-                                <div>
-                                    descripe
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <dogeCard></dogeCard>
                 </div>
             </Content>
     </Layout>
 </template>
 
 <script>
+import dogeCard from '@/components/dogeCard' //引入pageHeader组件
+
     export default {
-        
+        name: "pageContent",
+        components:{
+            'dogeCard': dogeCard,
+        }
     }
 </script>
 

@@ -4,6 +4,7 @@ import login from './components/login.vue'
 import home from './views/home.vue'
 import register from './components/register.vue'
 import userPage from './views/userPage'
+import updateUser from './views/updateUser'
 
 Vue.use(Router)
 
@@ -47,6 +48,12 @@ export default new Router({
       path: '/userPage',
       name: 'userPage',
       component: userPage
+    },
+    {
+      path: '/updateUser',
+      name: 'updateUser',
+      component: updateUser
     }
+
   ]
 })

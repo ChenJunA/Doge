@@ -16,8 +16,8 @@
                             </div>
                         </div>
                         <div class="user_information_right">
-                            <div style="width: 400px">
-                                <div style="whi">
+                            <div style="width: 400px; float:left">
+                                <div>
                                     <span style="font-weight:bold; font-size:24px">用户名</span>
                                 </div>
                                 <Divider style="margin:10px 0"/>
@@ -26,31 +26,83 @@
                                     <span style="font-size:16px">地址：123456789</span></br>
                                 </div>
                             </div>
-                            <div style="float:right; padding:20px;">
-                                <Button :size="large" type="primary" ghost >编辑资料</Button>
+                            <div style="float: right; margin-right:50px; text-align:center; margin-top:20px">
+                                <div style="margin-bottom:50px;font-size:14px">
+                                   <div style="float:left">
+                                       <div>关注了</div>
+                                       <div>xxx</div>
+                                   </div>
+                                   <Divider type="vertical" />
+                                   <div style="float:right">
+                                       <div>关注者</div>
+                                       <div>xxx</div>
+                                   </div>
+                                </div>
+                                
+                                <div style="text-align:center">
+                                    <router-link :to="{name: 'updateUser'}">
+                                        <Button :size="large" type="primary" ghost >编辑个人资料</Button>
+                                    </router-link>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
                
             </div>
+
+            <div class="page_content">
+                    <div style="text-align:center; font-size:16px;padding-top:15px">
+                         <Row>
+                            <Col span="8">
+                                <Row>
+                                    <Col span="8">我的发布</Col>
+                                    <Col span="8">我的帖子</Col>
+                                    <Col span="8">我的领养</Col>
+                                </Row>
+                            </Col>
+                            <Col span="8"></Col>
+                            <Col span="8"></Col>
+                        </Row>
+                    </div>
+                     <Divider style="margin-top:15px"/>
+                     
+                    <dogeCard></dogeCard>
+                    <Divider />
+
+                    <dogeCard></dogeCard>
+                    <Divider />
+
+                    <dogeCard></dogeCard>
+                    <Divider />
+
+                    <dogeCard></dogeCard>
+                    <Divider />
+
+                    <dogeCard></dogeCard>
+                </div>
         </Content>
     </Layout>
 </template>
 
 <script>
+import dogeCard from '@/components/dogeCard' //引入dogeCard组件
     export default {
-        
+        name: "userPageContent",
+        components:{
+            'dogeCard': dogeCard,
+        }
     }
 </script>
 
 <style>
-     .user_content {
+    .user_content {
         margin: auto;
         margin-top: 10px;
         width: 70%;
-        height: 1000px;
     }
+   
     .userCover{
         border-top-right-radius: 1px;
         border-top-left-radius: 1px;
@@ -70,6 +122,9 @@
         position: relative;
     }
 
+    .user_information {
+        height: 160px;
+    }
     .user_information_left {
         width: 20%;
         text-align: center;

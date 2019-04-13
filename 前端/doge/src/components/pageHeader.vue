@@ -21,7 +21,12 @@
                         <Input v-model="value4" icon="ios-search" placeholder="Enter something..." style="width: 90%" />
                     </Col>
                     <Col span="2">
-                            <Button type="primary" style="width: 50%">发布</Button>
+                            <Button type="primary" style="width: 50%" @click="modal = true">发布</Button>
+                            <Modal v-model="modal" title="动物信息" :loading="loading" @on-ok="asyncOK">
+                                <div>姓名</div>
+                                <div>性别</div>
+                                <div>年龄</div>
+                            </Modal>
                     </Col>
                     <Col span="4" style="text-align:left;">
                         <Col span="8">
@@ -59,12 +64,23 @@
 
 <script>
     export default {
+        data () {
+            return {
+                modal: false,
+                loading: true
+            }
+        },
         methods: {
             quit(){
                 this.$router.push('/');
             },
             toUserPage(){
                 this.$router.push('/userPage');
+            },
+            asyncOK () {
+                setTimeout(() => {
+                    this.modal = false;
+                }, 2000);
             }
         }
     }

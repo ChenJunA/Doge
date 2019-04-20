@@ -1,17 +1,17 @@
 <template>
-   <div class="doge_card"  @click="dog()">
-        <div class="doge_card_left">
+   <div class="forum_card"  @click="forum()">
+        <div class="forum_card_left">
             <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
         </div>
 
-        <div class="doge_card_right">
+        <div class="forum_card_right">
             <div>
                 <div style="font-size:16px; font-weight:bold">
-                    title
+                    帖子标题
                 </div>
                 <Divider />
                 <div>
-                    descripe
+                    帖子内容
                 </div>
             </div>
         </div>
@@ -23,25 +23,25 @@
 
 export default {
    methods:{
-       dog(){
-           this.$router.push('/dogPage')
-       }
+        forum(){
+            this.$router.push('/forumInfoPage')
+        }
    }
 }
 </script>
 
 <style>
-.doge_card {
+.forum_card {
     width: 90%;
     height:150px;
 }
-.doge_card_left {
+.forum_card_left {
     width: 30%;
     float: left;
     text-align: center;
     margin-top: 25px;
 }
-.doge_card_right {
+.forum_card_right {
     width: 70%;
     float: right;
     margin-top: 25px;

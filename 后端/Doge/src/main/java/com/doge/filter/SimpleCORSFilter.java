@@ -1,6 +1,7 @@
 package com.doge.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.IOException;
  * @Author: chenjun
  * @Date: 2018/04/12
  */
+@WebFilter(urlPatterns = "/*")
 public class SimpleCORSFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

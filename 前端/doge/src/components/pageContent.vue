@@ -1,37 +1,37 @@
 <template>
     <Layout>
         <Content>
-                <div class="page_content">
-                    <div style="text-align:center; font-size:16px;padding-top:15px">
-                         <Row>
-                            <Col span="8">
-                                <Row>
-                                    <Col span="8">推荐</Col>
-                                    <Col span="8">流浪</Col>
-                                    <Col span="8">送养</Col>
-                                </Row>
-                            </Col>
-                            <Col span="8"></Col>
-                            <Col span="8"></Col>
-                        </Row>
-                    </div>
-                     <Divider style="margin-top:15px"/>
-                     
-                    <dogeCard></dogeCard>
-                    <Divider />
-
-                    <dogeCard></dogeCard>
-                    <Divider />
-
-                    <dogeCard></dogeCard>
-                    <Divider />
-
-                    <dogeCard></dogeCard>
-                    <Divider />
-
-                    <dogeCard></dogeCard>
+            <div class="page_content">
+                <div style="text-align:center; font-size:16px;padding-top:15px">
+                        <Row>
+                        <Col span="8">
+                            <Row>
+                                <Col span="8">推荐</Col>
+                                <Col span="8">流浪</Col>
+                                <Col span="8">送养</Col>
+                            </Row>
+                        </Col>
+                        <Col span="8"></Col>
+                        <Col span="8"></Col>
+                    </Row>
                 </div>
-            </Content>
+                <Divider style="margin-top:15px"/>
+                    
+                <dogeCard></dogeCard>
+                <Divider />
+
+                <dogeCard></dogeCard>
+                <Divider />
+
+                <dogeCard></dogeCard>
+                <Divider />
+
+                <dogeCard></dogeCard>
+                <Divider />
+
+                <dogeCard></dogeCard>
+            </div>
+        </Content>
     </Layout>
 </template>
 

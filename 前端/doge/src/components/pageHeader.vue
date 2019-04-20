@@ -10,7 +10,7 @@
                                 <router-link :to="{name: 'home'}" style="color:gray">首页</router-link>
                             </Col>
                             <Col span="8">
-                                <router-link :to="{name: 'home'}" style="color:gray">论坛</router-link>
+                                <router-link :to="{name: 'forum'}" style="color:gray">论坛</router-link>
                             </Col>
                             <Col span="8">
                                 <router-link :to="{name: 'home'}" style="color:gray">资料</router-link>
@@ -18,14 +18,46 @@
                         </Row>
                     </Col>
                     <Col span="8" style="text-align:center;">
-                        <Input v-model="value4" icon="ios-search" placeholder="Enter something..." style="width: 90%" />
+                        <Input icon="ios-search" placeholder="Enter something..." style="width: 90%" />
                     </Col>
                     <Col span="2">
                             <Button type="primary" style="width: 50%" @click="modal = true">发布</Button>
-                            <Modal v-model="modal" title="动物信息" :loading="loading" @on-ok="asyncOK">
-                                <div>姓名</div>
-                                <div>性别</div>
-                                <div>年龄</div>
+                            <Modal v-model="modal" title="动物信息" :loading="loading" @on-ok="OK('dogData')">
+                                <Form ref="dogData" :model="dogData" :label-width="40" :rules="dogValidate">
+                                    <FormItem prop="dogName" label="姓名">
+                                        <Input type="text" v-model="dogData.dogName" placeholder="动物名">
+                                        </Input>
+                                    </FormItem>
+                                    <FormItem prop="age" label="年龄">
+                                        <Input type="text" v-model="dogData.age" placeholder="年龄">
+                                        </Input>
+                                    </FormItem>
+                                    <FormItem prop="sex" label="性别">
+                                        <Select v-model="dogData.sex">
+                                            <Option value="male">男</Option>
+                                            <Option value="famale">女</Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem prop="address" label="地址">
+                                        <Input type="text" v-model="dogData.address" placeholder="地址">
+                                        </Input>
+                                    </FormItem>
+                                    <FormItem prop="vaccine" label="疫苗">
+                                        <Select v-model="dogData.vaccine">
+                                            <Option value="1">已注射</Option>
+                                            <Option value="0">未注射</Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem prop="type" label="类别">
+                                        <Select v-model="dogData.type">
+                                            <Option value="1">流浪狗</Option>
+                                            <Option value="2">宠物狗</Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem prop="dogDescribe" label="描述">
+                                        <Input v-model="dogData.dogDescribe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
+                                    </FormItem>
+                                </Form>
                             </Modal>
                     </Col>
                     <Col span="4" style="text-align:left;">
@@ -66,8 +98,40 @@
     export default {
         data () {
             return {
+                dogData: {
+                    dogName:'',
+                    age:'',
+                    sex:'',
+                    address:'',
+                    vaccine:'',
+                    type:'',
+                    dogDescribe:''
+                },
                 modal: false,
-                loading: true
+                loading: true,
+                dogValidate: {
+                    dogName: [
+                        { required: true, message: '姓名不能为空', trigger: 'blur' }
+                    ],
+                    age: [
+                        { required: true, message: '年龄不能为空', trigger: 'blur' },
+                    ],
+                    sex: [
+                        { required: true, message: '性别不能为空', trigger: 'blur' },
+                    ],
+                    address: [
+                        { required: true, message: '地址不能为空', trigger: 'blur' },
+                    ],
+                    vaccine: [
+                        { required: true, message: '疫苗不能为空', trigger: 'blur' },
+                    ],
+                    type: [
+                        { required: true, message: '类型不能为空', trigger: 'blur' },
+                    ],
+                    dogDescribe: [
+                        { required: true, message: '描述不能为空', trigger: 'blur' },
+                    ]
+                }
             }
         },
         methods: {
@@ -77,10 +141,24 @@
             toUserPage(){
                 this.$router.push('/userPage');
             },
-            asyncOK () {
-                setTimeout(() => {
-                    this.modal = false;
-                }, 2000);
+            OK (name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                         setTimeout(() => {
+                            this.modal = false;
+                        }, 500);
+
+                        this.axios.post("http://localhost:80/dog",this.dogData)
+                        .then(resp => {
+                            // this.$Message.success("发布成功");
+                        })
+                        .catch(err => {
+                            this.$Message.error("请求出错");
+                        });
+                    } else {
+                        this.$Message.error('动物信息有误！')
+                    }
+                })
             }
         }
     }

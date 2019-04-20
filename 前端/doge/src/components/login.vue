@@ -4,16 +4,16 @@
             <h2>Doge</h2>
 
             <Form ref="loginData" :model="loginData" :rules="ruleValidate">
-                <FormItem prop="acct">
-                    <Input type="text" v-model="loginData.acct" placeholder="用户名或邮箱"></Input>
+                <FormItem prop="username">
+                    <Input type="text" v-model="loginData.username" placeholder="用户名"></Input>
                 </FormItem>
 
-                <FormItem prop="pass">
-                    <Input type="password" v-model="loginData.pass" placeholder="密码"></Input>
+                <FormItem prop="password">
+                    <Input type="password" v-model="loginData.password" placeholder="密码"></Input>
                 </FormItem>
 
                 <FormItem class="form-footer">
-                    <Button type="primary" @click="handleSubmit('loginData')">登录</Button>
+                    <Button style="width:100%" type="primary" @click="login('loginData')">登录</Button>
                 </FormItem>
             </Form>
 
@@ -35,15 +35,14 @@ export default {
     data () {
         return {
             loginData: {
-                acct:'',
-                pass:''
+                username:'',
+                password:''
             },
             ruleValidate: {
-                acct: [
-                    { required: true, message: '账号不能为空', trigger: 'blur' },
-                    { min: 3, max: 16, message: '账号长度3-16个字符', trigger: 'blur' }
+                username: [
+                    { required: true, message: '账号不能为空', trigger: 'blur' }
                 ],
-                pass: [
+                password: [
                     { required: true, message: '密码不能为空', trigger: 'blur' },
                     { type: 'string', min: 6, max: 16, message: '密码长度6-16个字符', trigger: 'blur' }
                 ]
@@ -51,18 +50,27 @@ export default {
         }
     },
     methods: {
-        handleSubmit (name) {
+        login (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                this.$Message.success('提交成功!')
+                    this.axios.post("http://localhost:80/login",this.loginData)
+                    .then(resp => {
+                        if(resp.data.status === 10002) {
+                            this.$Message.error("用户不存在");
+                        } else if(resp.data.status === 10003) {
+                            this.$Message.error("密码错误");
+                        } else {
+                            this.$Message.success('登录成功！')
+                            this.$router.push('/home')
+                        }
+                    })
+                    .catch(err => {
+                        this.$Message.error("请求出错");
+                    });
                 } else {
-                this.$Message.error('表单验证失败!')
+                    this.$Message.error('登录信息有误')
                 }
             })
-            this.$router.push('/home')
-        },
-        handleReset (name) {
-            this.$refs[name].resetFields();
         },
         register(){
             this.$router.push('/register')
@@ -99,9 +107,6 @@ export default {
         font-size: 16px;
         display: block;
         margin-top: -15px;
-    }
-    button{
-        width: 100%;
     }
     .ivu-form-item-required .ivu-form-item-label:before {
         display: none;

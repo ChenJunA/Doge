@@ -5,16 +5,16 @@
             <h2>Doge</h2>
 
             <Form ref="registerData" :model="registerData" :rules="ruleValidate">
-                <FormItem prop="acct">
-                    <Input type="text" v-model="registerData.acct" placeholder="邮箱"></Input>
+                <FormItem prop="email">
+                    <Input type="text" v-model="registerData.email" placeholder="邮箱"></Input> 
                 </FormItem>
 
-                <FormItem prop="pass">
-                    <Input type="password" v-model="registerData.pass" placeholder="密码"></Input>
+                <FormItem prop="password">
+                    <Input type="password" v-model="registerData.password" placeholder="密码"></Input>
                 </FormItem>
 
                 <FormItem class="form-footer">
-                    <Button type="primary" @click="handleSubmit('registerData')">注册</Button>
+                    <Button style="width:100%" type="primary" @click="register('registerData')">注册</Button>
                 </FormItem>
             </Form>
 
@@ -34,17 +34,45 @@
 <script>
 export default {
     data () {
+        var emailValidator = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('账号不能为空'));
+            } else {
+                 this.axios.get("http://localhost:80/findByEmail",{
+                     params: {
+                         email:this.registerData.email
+                     }
+                 })
+                .then(resp => {
+                    if (resp.data.status === 10001) {
+                        callback(new Error('该邮箱已被注册'));
+                    } else {
+                        if (value !== '') { 
+                            var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                            if(!reg.test(value)){
+                                callback(new Error('邮箱格式错误'));
+                            }
+                        }
+                        callback();
+                    }
+                })
+                .catch(err => {
+                    callback(new Error('请求出错'));
+                });
+            }
+        };
+
         return {
             registerData: {
-                acct:'',
-                pass:''
+                email:'',
+                password:'',
             },
             ruleValidate: {
-                acct: [
+                email: [
                     { required: true, message: '账号不能为空', trigger: 'blur' },
-                    { min: 3, max: 16, message: '账号长度3-16个字符', trigger: 'blur' }
+                    { validator: emailValidator, trigger: 'blur'}
                 ],
-                pass: [
+                password: [
                     { required: true, message: '密码不能为空', trigger: 'blur' },
                     { type: 'string', min: 6, max: 16, message: '密码长度6-16个字符', trigger: 'blur' }
                 ]
@@ -52,21 +80,21 @@ export default {
         }
     },
     methods: {
-        handleSubmit (name) {
+        register (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                this.$Message.success('提交成功!')
+                    this.axios.post("http://localhost:80/register",this.registerData)
+                    .then(resp => {
+                        this.$Message.success("注册成功，激活后即可登录");
+                    })
+                    .catch(err => {
+                        this.$Message.error(err.data.message);
+                    });
                 } else {
-                this.$Message.error('表单验证失败!')
+                    this.$Message.error('注册信息有误！')
                 }
             })
         },
-        handleReset (name) {
-            this.$refs[name].resetFields();
-        },
-        login(){
-            this.$router.push('/login')
-        }
     }
 }
 </script>
@@ -99,9 +127,6 @@ export default {
         text-align: center;
         font-size: 16px;
         margin-top: -15px;
-    }
-    button{
-        width: 100%;
     }
     .ivu-form-item-required .ivu-form-item-label:before {
         display: none;

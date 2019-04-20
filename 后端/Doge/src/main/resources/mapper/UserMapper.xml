@@ -19,7 +19,7 @@
       <arg column="stars" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="is_ban" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="is_acitve" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="is_active" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -54,7 +54,7 @@
   <sql id="Base_Column_List" >
     id, gmt_create, gmt_modified, username, password, picture, avatar, sex, address, 
     phone_number, biography, Followers_number, Following_number, stars, is_ban, email, 
-    is_acitve
+    is_active
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.doge.entity.UserExample" >
     select
@@ -86,13 +86,13 @@
       password, picture, avatar, 
       sex, address, phone_number, 
       biography, Followers_number, Following_number, 
-      stars, is_ban, email, is_acitve
+      stars, is_ban, email, is_active
       )
     values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
       #{biography,jdbcType=VARCHAR}, #{followersNumber,jdbcType=BIGINT}, #{followingNumber,jdbcType=BIGINT}, 
-      #{stars,jdbcType=INTEGER}, #{isBan,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, #{isAcitve,jdbcType=BIT}
+      #{stars,jdbcType=INTEGER}, #{isBan,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, #{isActive,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.doge.entity.User" useGeneratedKeys="true" keyProperty="id" >
@@ -143,8 +143,8 @@
       <if test="email != null" >
         email,
       </if>
-      <if test="isAcitve != null" >
-        is_acitve,
+      <if test="isActive != null" >
+        is_active,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -193,8 +193,8 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="isAcitve != null" >
-        #{isAcitve,jdbcType=BIT},
+      <if test="isActive != null" >
+        #{isActive,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -246,8 +246,8 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="isAcitve != null" >
-        is_acitve = #{isAcitve,jdbcType=BIT},
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -269,7 +269,7 @@
       stars = #{stars,jdbcType=INTEGER},
       is_ban = #{isBan,jdbcType=BIT},
       email = #{email,jdbcType=VARCHAR},
-      is_acitve = #{isAcitve,jdbcType=BIT}
+      is_active = #{isActive,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

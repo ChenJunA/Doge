@@ -15,6 +15,7 @@ CREATE TABLE `doge_user` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
   `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(300) NOT NULL DEFAULT '' COMMENT '密码',
   `picture` varchar(100) NOT NULL DEFAULT '' COMMENT '封面图片',
@@ -27,6 +28,7 @@ CREATE TABLE `doge_user` (
   `Following_number` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT '关注数',
   `stars` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数',
   `is_ban` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否封禁，默认为0未封禁，1为已封禁',
+  `is_active` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否激活，默认为0未激活，1为已激活',
    PRIMARY KEY (`id`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -69,7 +71,7 @@ CREATE TABLE `doge_role_permision` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* 动物分类表 0——待领养，1——领养中，2——已领养*/
-CREATE TABLE `doge_dog_category` (
+CREATE TABLE `doge_dog_type` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -80,11 +82,12 @@ CREATE TABLE `doge_dog_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* 动物状态表 */
-CREATE TABLE `doge_state` (
+CREATE TABLE `doge_dog_state` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `name` varchar(20) NOT NULL COMMENT '状态名称',
+  `number` tinyint(10) NOT NULL DEFAULT '0' COMMENT '状态下的动物数量',
   `is_delete` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否删除，默认为0未删除，1为已删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -94,15 +97,17 @@ CREATE TABLE `doge_dog` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `category` int UNSIGNED NOT NULL COMMENT '类别',
-  `foster` int UNSIGNED NOT NULL COMMENT '送养人',
-  `adopt` int UNSIGNED COMMENT '领养人',
+  `type` bigint UNSIGNED NOT NULL COMMENT '类别',
+  `foster` bigint UNSIGNED NOT NULL COMMENT '发布人',
+  `adopt` bigint UNSIGNED COMMENT '领养人',
   `adopt_time` datetime COMMENT '领养时间',
   `state` bigint UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态',
+  `dog_name` varchar(50) NOT NULL DEFAULT '' COMMENT '动物名',
   `sex` varchar(300) NOT NULL DEFAULT '' COMMENT '性别',
   `age` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '年龄',
   `address` varchar(200) NOT NULL DEFAULT '' COMMENT '地址',
-  `describe` varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
+  `is_vaccine` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否注射疫苗，默认为0未注射疫苗，1为已注射疫苗',
+  `dog_describe` varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
   `picture` varchar(100) NOT NULL DEFAULT '' COMMENT '图片',
   `is_delete` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否删除，默认为0未删除，1为已删除',
   PRIMARY KEY (`id`) 

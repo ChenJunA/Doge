@@ -5,6 +5,9 @@ import home from './views/home.vue'
 import register from './components/register.vue'
 import userPage from './views/userPage'
 import updateUser from './views/updateUser'
+import dogPage from './views/dogPage'
+import forumPage from './views/forumPage'
+import forumInfoPage from './views/forumInfoPage'
 
 Vue.use(Router)
 
@@ -53,7 +56,21 @@ export default new Router({
       path: '/updateUser',
       name: 'updateUser',
       component: updateUser
+    },
+    {
+      path: '/dogPage',
+      name: 'dogPage',
+      component: dogPage
+    },
+    {
+      path: '/forum',
+      name: 'forum',
+      component: forumPage
+    },
+    {
+      path: '/forumInfoPage',
+      name: 'forumInfoPage',
+      component: forumInfoPage
     }
-
   ]
 })

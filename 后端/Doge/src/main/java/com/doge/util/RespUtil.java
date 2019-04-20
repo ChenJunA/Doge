@@ -1,6 +1,6 @@
 package com.doge.util;
 
-import com.ayigu.blog.enums.StatusCode;
+import com.doge.enums.StatusCode;
 import org.springframework.http.HttpStatus;
 
 import java.util.Map;

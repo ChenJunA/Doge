@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.doge.mapper.DogMapper" >
+  <resultMap id="BaseResultMap" type="com.doge.entity.Dog" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="type" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="foster" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="adopt" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="adopt_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="state" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="dog_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_vaccine" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="dog_describe" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_delete" jdbcType="BIT" javaType="java.lang.Boolean" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, gmt_create, gmt_modified, type, foster, adopt, adopt_time, state, dog_name, sex, 
+    age, address, is_vaccine, dog_describe, picture, is_delete
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.doge.entity.DogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from doge_dog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doge_dog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doge_dog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.doge.entity.Dog" useGeneratedKeys="true" keyProperty="id" >
+    insert into doge_dog (gmt_create, gmt_modified, type, 
+      foster, adopt, adopt_time, 
+      state, dog_name, sex, 
+      age, address, is_vaccine, 
+      dog_describe, picture, is_delete
+      )
+    values (#{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{type,jdbcType=BIGINT}, 
+      #{foster,jdbcType=BIGINT}, #{adopt,jdbcType=BIGINT}, #{adoptTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=BIGINT}, #{dogName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{isVaccine,jdbcType=BIT}, 
+      #{dogDescribe,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.doge.entity.Dog" useGeneratedKeys="true" keyProperty="id" >
+    insert into doge_dog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="foster != null" >
+        foster,
+      </if>
+      <if test="adopt != null" >
+        adopt,
+      </if>
+      <if test="adoptTime != null" >
+        adopt_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="dogName != null" >
+        dog_name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="isVaccine != null" >
+        is_vaccine,
+      </if>
+      <if test="dogDescribe != null" >
+        dog_describe,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=BIGINT},
+      </if>
+      <if test="foster != null" >
+        #{foster,jdbcType=BIGINT},
+      </if>
+      <if test="adopt != null" >
+        #{adopt,jdbcType=BIGINT},
+      </if>
+      <if test="adoptTime != null" >
+        #{adoptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIGINT},
+      </if>
+      <if test="dogName != null" >
+        #{dogName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isVaccine != null" >
+        #{isVaccine,jdbcType=BIT},
+      </if>
+      <if test="dogDescribe != null" >
+        #{dogDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doge.entity.Dog" >
+    update doge_dog
+    <set >
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=BIGINT},
+      </if>
+      <if test="foster != null" >
+        foster = #{foster,jdbcType=BIGINT},
+      </if>
+      <if test="adopt != null" >
+        adopt = #{adopt,jdbcType=BIGINT},
+      </if>
+      <if test="adoptTime != null" >
+        adopt_time = #{adoptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIGINT},
+      </if>
+      <if test="dogName != null" >
+        dog_name = #{dogName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isVaccine != null" >
+        is_vaccine = #{isVaccine,jdbcType=BIT},
+      </if>
+      <if test="dogDescribe != null" >
+        dog_describe = #{dogDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doge.entity.Dog" >
+    update doge_dog
+    set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=BIGINT},
+      foster = #{foster,jdbcType=BIGINT},
+      adopt = #{adopt,jdbcType=BIGINT},
+      adopt_time = #{adoptTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=BIGINT},
+      dog_name = #{dogName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      is_vaccine = #{isVaccine,jdbcType=BIT},
+      dog_describe = #{dogDescribe,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1155,63 +1155,63 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveIsNull() {
-            addCriterion("is_acitve is null");
+        public Criteria andIsActiveIsNull() {
+            addCriterion("is_active is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveIsNotNull() {
-            addCriterion("is_acitve is not null");
+        public Criteria andIsActiveIsNotNull() {
+            addCriterion("is_active is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveEqualTo(Boolean value) {
-            addCriterion("is_acitve =", value, "isAcitve");
+        public Criteria andIsActiveEqualTo(Boolean value) {
+            addCriterion("is_active =", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveNotEqualTo(Boolean value) {
-            addCriterion("is_acitve <>", value, "isAcitve");
+        public Criteria andIsActiveNotEqualTo(Boolean value) {
+            addCriterion("is_active <>", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveGreaterThan(Boolean value) {
-            addCriterion("is_acitve >", value, "isAcitve");
+        public Criteria andIsActiveGreaterThan(Boolean value) {
+            addCriterion("is_active >", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("is_acitve >=", value, "isAcitve");
+        public Criteria andIsActiveGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_active >=", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveLessThan(Boolean value) {
-            addCriterion("is_acitve <", value, "isAcitve");
+        public Criteria andIsActiveLessThan(Boolean value) {
+            addCriterion("is_active <", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveLessThanOrEqualTo(Boolean value) {
-            addCriterion("is_acitve <=", value, "isAcitve");
+        public Criteria andIsActiveLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_active <=", value, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveIn(List<Boolean> values) {
-            addCriterion("is_acitve in", values, "isAcitve");
+        public Criteria andIsActiveIn(List<Boolean> values) {
+            addCriterion("is_active in", values, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveNotIn(List<Boolean> values) {
-            addCriterion("is_acitve not in", values, "isAcitve");
+        public Criteria andIsActiveNotIn(List<Boolean> values) {
+            addCriterion("is_active not in", values, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_acitve between", value1, value2, "isAcitve");
+        public Criteria andIsActiveBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_active between", value1, value2, "isActive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAcitveNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_acitve not between", value1, value2, "isAcitve");
+        public Criteria andIsActiveNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_active not between", value1, value2, "isActive");
             return (Criteria) this;
         }
     }

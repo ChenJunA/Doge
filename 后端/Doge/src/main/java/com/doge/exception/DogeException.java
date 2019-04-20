@@ -7,13 +7,13 @@ import com.doge.enums.StatusCode;
  * @Author: chenjun
  * @Date: 2018/04/12
  */
-public class MyException extends RuntimeException {
+public class DogeException extends RuntimeException {
     /**
      * 状态码
      */
     private Integer code;
 
-    public MyException(StatusCode statusCode) {
+    public DogeException(StatusCode statusCode) {
         super(statusCode.getMessage());
         this.code = statusCode.getCode();
     }

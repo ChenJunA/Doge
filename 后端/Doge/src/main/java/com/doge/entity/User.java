@@ -31,13 +31,13 @@ public class User {
 
     private Integer stars;
 
-    private Boolean isBan;
+    private Boolean ban;
 
     private String email;
 
-    private Boolean isAcitve;
+    private Boolean active;
 
-    public User(Long id, Date gmtCreate, Date gmtModified, String username, String password, String picture, String avatar, String sex, String address, String phoneNumber, String biography, Long followersNumber, Long followingNumber, Integer stars, Boolean isBan, String email, Boolean isAcitve) {
+    public User(Long id, Date gmtCreate, Date gmtModified, String username, String password, String picture, String avatar, String sex, String address, String phoneNumber, String biography, Long followersNumber, Long followingNumber, Integer stars, Boolean ban, String email, Boolean active) {
         this.id = id;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
@@ -52,9 +52,9 @@ public class User {
         this.followersNumber = followersNumber;
         this.followingNumber = followingNumber;
         this.stars = stars;
-        this.isBan = isBan;
+        this.ban = ban;
         this.email = email;
-        this.isAcitve = isAcitve;
+        this.active = active;
     }
 
     public User() {
@@ -174,11 +174,11 @@ public class User {
     }
 
     public Boolean getIsBan() {
-        return isBan;
+        return ban;
     }
 
-    public void setIsBan(Boolean isBan) {
-        this.isBan = isBan;
+    public void setIsBan(Boolean ban) {
+        this.ban = ban;
     }
 
     public String getEmail() {
@@ -189,11 +189,11 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
-    public Boolean getIsAcitve() {
-        return isAcitve;
+    public Boolean getIsActive() {
+        return active;
     }
 
-    public void setIsAcitve(Boolean isAcitve) {
-        this.isAcitve = isAcitve;
+    public void setIsActive(Boolean active) {
+        this.active = active;
     }
 }

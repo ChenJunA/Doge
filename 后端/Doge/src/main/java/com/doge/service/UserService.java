@@ -32,7 +32,7 @@ public interface UserService {
      *
      * @param user
      */
-    void updateUser(User user) throws Exception;
+    User updateUser(User user) throws Exception;
 
     /**
      * 删除用户
@@ -51,21 +51,21 @@ public interface UserService {
      *
      * @param userName
      */
-    User findByName(String userName) throws Exception;
+    User getUserByName(String userName) throws Exception;
 
     /**
      * 根据邮箱查找用户
      *
      * @param email
      */
-    User findByEmail(String email) throws Exception;
+    User getUserByEmail(String email) throws Exception;
 
     /**
      * 根据ID查找用户
      *
      * @param userId
      */
-    User findById(Long userId) throws Exception;
+    User getUserById(Long userId) throws Exception;
 
     /**
      * 封禁用户

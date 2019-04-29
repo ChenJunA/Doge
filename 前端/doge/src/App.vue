@@ -5,15 +5,13 @@
 </template>
 
 <script>
-
-
-export default {
-  name: 'App',
-}
+  export default {
+    name: 'App',
+  }
 </script>
 
 <style>
-body{
-  background-image: url(./assets/index.png);
-}
+  body{
+    background-image: url(./assets/index.png);
+  }
 </style>

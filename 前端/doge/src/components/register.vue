@@ -38,7 +38,7 @@ export default {
             if (value === '') {
                 callback(new Error('账号不能为空'));
             } else {
-                 this.axios.get("http://localhost:80/findByEmail",{
+                 this.axios.get("http://localhost:80/getUserByEmail",{
                      params: {
                          email:this.registerData.email
                      }

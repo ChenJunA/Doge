@@ -6,9 +6,15 @@
                         <Row>
                         <Col span="8">
                             <Row>
-                                <Col span="8">推荐</Col>
-                                <Col span="8">流浪</Col>
-                                <Col span="8">送养</Col>
+                                <Col span="8">
+                                    <a @click="listByType(3)" style="color:gray">推荐</a>
+                                </Col>
+                                <Col span="8">
+                                    <a @click="listByType(1)" style="color:gray">流浪</a>
+                                </Col>
+                                <Col span="8">
+                                    <a @click="listByType(2)" style="color:gray">送养</a>
+                                </Col>
                             </Row>
                         </Col>
                         <Col span="8"></Col>
@@ -16,20 +22,8 @@
                     </Row>
                 </div>
                 <Divider style="margin-top:15px"/>
-                    
-                <dogeCard></dogeCard>
-                <Divider />
 
-                <dogeCard></dogeCard>
-                <Divider />
-
-                <dogeCard></dogeCard>
-                <Divider />
-
-                <dogeCard></dogeCard>
-                <Divider />
-
-                <dogeCard></dogeCard>
+                <dogeCard  v-bind:item="doge" v-for="doge in dogeList"></dogeCard>
             </div>
         </Content>
     </Layout>
@@ -38,12 +32,31 @@
 <script>
 import dogeCard from '@/components/dogeCard' //引入pageHeader组件
 
-    export default {
-        name: "pageContent",
-        components:{
-            'dogeCard': dogeCard,
+export default {
+    name: "pageContent",
+    data() {
+        return {
+            dogeList:""
+        }
+    },
+    components:{
+        'dogeCard': dogeCard,
+    },
+    mounted(){
+        this.listByType(3);
+    },
+    methods: {
+        listByType(typeId) {
+            this.axios.get("http://localhost:80/listByType/" + typeId)
+            .then(resp => {
+                this.dogeList = resp.data.data;
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
         }
     }
+}
 </script>
 
 <style>

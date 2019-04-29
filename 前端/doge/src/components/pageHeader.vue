@@ -13,7 +13,7 @@
                                 <router-link :to="{name: 'forum'}" style="color:gray">论坛</router-link>
                             </Col>
                             <Col span="8">
-                                <router-link :to="{name: 'home'}" style="color:gray">资料</router-link>
+                                <router-link :to="{name: 'material'}" style="color:gray">资料</router-link>
                             </Col>
                         </Row>
                     </Col>
@@ -22,8 +22,8 @@
                     </Col>
                     <Col span="2">
                             <Button type="primary" style="width: 50%" @click="modal = true">发布</Button>
-                            <Modal v-model="modal" title="动物信息" :loading="loading" @on-ok="OK('dogData')">
-                                <Form ref="dogData" :model="dogData" :label-width="40" :rules="dogValidate">
+                            <Modal v-model="modal" title="动物信息" :loading="loading" @on-ok="OK('dogData')" :closable="false" :mask-closable="false">
+                                <Form ref="dogData" :model="dogData" :label-width="40" :rules="dogValidate" class="coverCss">
                                     <FormItem prop="dogName" label="姓名">
                                         <Input type="text" v-model="dogData.dogName" placeholder="动物名">
                                         </Input>
@@ -34,8 +34,8 @@
                                     </FormItem>
                                     <FormItem prop="sex" label="性别">
                                         <Select v-model="dogData.sex">
-                                            <Option value="male">男</Option>
-                                            <Option value="famale">女</Option>
+                                            <Option value="男">男</Option>
+                                            <Option value="女">女</Option>
                                         </Select>
                                     </FormItem>
                                     <FormItem prop="address" label="地址">
@@ -55,9 +55,17 @@
                                         </Select>
                                     </FormItem>
                                     <FormItem prop="dogDescribe" label="描述">
-                                        <Input v-model="dogData.dogDescribe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
+                                        <Input v-model="dogData.dogDescribe" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="描述..."></Input>
                                     </FormItem>
                                 </Form>
+                                <Upload
+                                    multiple
+                                    :format="['jpg','jpeg','png']"
+                                    action="http://localhost:80/dogPicsUpload"
+                                    :data= "postData"
+                                    class="coverCss">
+                                    <Button icon="ios-cloud-upload-outline" style="width:100%">上传动物图片</Button>
+                                </Upload>
                             </Modal>
                     </Col>
                     <Col span="4" style="text-align:left;">
@@ -69,7 +77,7 @@
                         </Col>
                         <Col span="8">
                             <Poptip>
-                                <Avatar shape="square" src="https://i.loli.net/2017/08/21/599a521472424.jpg"></Avatar>
+                                <Avatar shape="square" :src="user.avatar"></Avatar>
                                 <div class="api" slot="content">
                                     <div class="poptip_icon">
                                         <Icon type="ios-contact" />&nbsp;<a @click="toUserPage()" style="color:gray">主页</a>
@@ -88,8 +96,6 @@
                     </Col>
                 </Row>
             </Header>
-            
-            
         </Layout>
     </div>
 </template>
@@ -98,6 +104,9 @@
     export default {
         data () {
             return {
+                postData:{
+                    foster: this.$store.state.dogId
+                },
                 dogData: {
                     dogName:'',
                     age:'',
@@ -105,7 +114,8 @@
                     address:'',
                     vaccine:'',
                     type:'',
-                    dogDescribe:''
+                    dogDescribe:'',
+                    foster: this.$store.state.user.id
                 },
                 modal: false,
                 loading: true,
@@ -134,8 +144,16 @@
                 }
             }
         },
+        mounted(){
+        },
+        computed: {
+            user () {
+                return this.$store.state.user
+            }
+        },
         methods: {
             quit(){
+                this.axios.post("http://localhost:80/logout")
                 this.$router.push('/');
             },
             toUserPage(){
@@ -172,5 +190,18 @@
     .poptip_icon {
         text-align: center;
         font-size: 16px;
+    }
+    .coverCss .ivu-form-item-required .ivu-form-item-label:before {
+        content: '';
+        display: inline-block;
+        margin-right: 4px;
+        line-height: 1;
+        font-family: SimSun;
+        font-size: 12px;
+        color: #ed4014;
+    }
+    .coverCss .ivu-upload-select {
+        display: inline-block;
+        width: 100%;
     }
 </style>

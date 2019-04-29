@@ -41,22 +41,25 @@ public class ShiroConfig {
          */
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
-//        filterChainDefinitionMap.put("/", "anon");
-//        filterChainDefinitionMap.put("/static/**", "anon");
-//        filterChainDefinitionMap.put("/login/auth", "anon");
-//        filterChainDefinitionMap.put("/login/logout", "anon");
-//        filterChainDefinitionMap.put("/error", "anon");
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/register", "anon");
-        filterChainDefinitionMap.put("/findByEmail", "anon");
+        filterChainDefinitionMap.put("/getUserByEmail", "anon");
         filterChainDefinitionMap.put("/active/*", "anon");
         filterChainDefinitionMap.put("/dog","anon");
+
+        filterChainDefinitionMap.put("/dogPicsUpload","anon");
+
+        filterChainDefinitionMap.put("/listDogsByFosterId","anon");
+        filterChainDefinitionMap.put("/listDogsByAdoptId","anon");
+        filterChainDefinitionMap.put("/updateUser","anon");
+        filterChainDefinitionMap.put("/getDogById/*","anon");
+        filterChainDefinitionMap.put("/findUserById","anon");
+        filterChainDefinitionMap.put("/listByType/*","anon");
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
     }
-
 
     /**
      * 创建DefaultWebSecurityManager
@@ -69,7 +72,6 @@ public class ShiroConfig {
         return securityManager;
 
     }
-
 
     /**
      * 创建Realm

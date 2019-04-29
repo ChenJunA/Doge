@@ -34,18 +34,33 @@ public class DogeRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException{
+        User user = new User();
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String username = token.getUsername();
         User nameUser = null;
         try {
-            nameUser = userService.findByName(username);
+            nameUser = userService.getUserByName(username);
+
+            user.setId(nameUser.getId());
+            user.setAvatar(nameUser.getAvatar());
+            user.setPicture(nameUser.getPicture());
+            user.setIsBan(nameUser.getIsBan());
+            user.setIsActive(nameUser.getIsActive());
+            user.setAddress(nameUser.getAddress());
+            user.setBiography(nameUser.getBiography());
+            user.setFollowersNumber(nameUser.getFollowersNumber());
+            user.setPhoneNumber(nameUser.getPhoneNumber());
+            user.setFollowingNumber(nameUser.getFollowingNumber());
+            user.setStars(nameUser.getStars());
+            user.setUsername(nameUser.getUsername());
+            user.setSex(nameUser.getSex());
         } catch (Exception e) {
-            throw new DogeException(StatusCode.USERNAME_ERROR);
+
         }
 
         if(nameUser == null){
             throw new UnknownAccountException("用户不存在");
         }
-        return new SimpleAuthenticationInfo("", nameUser.getPassword(), "");
+        return new SimpleAuthenticationInfo(user, nameUser.getPassword(), "");
     }
 }

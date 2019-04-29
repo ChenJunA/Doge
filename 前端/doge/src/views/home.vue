@@ -13,9 +13,20 @@ import pageContent from '@/components/pageContent' //引入pageContent组件
 
 export default {
     name: "home",
+    data() {
+        return {
+            avatarUrl:''
+        }
+    },
     components:{
         'pageHeader': pageHeader,
         'pageContent': pageContent
+    },
+    mounted(){
+        
+    },
+    methods:{
+        
     }
 }
 </script>

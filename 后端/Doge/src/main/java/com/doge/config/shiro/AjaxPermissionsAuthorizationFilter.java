@@ -1,6 +1,5 @@
 package com.doge.config.shiro;
 
-import com.doge.util.RespUtil;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

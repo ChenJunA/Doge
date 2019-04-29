@@ -52,6 +52,11 @@ public enum StatusCode {
     PASSWORD_ERROR(10003, "密码错误"),
 
     /**
+     * 文件为空
+     */
+    FILE_EMPTY(10004, "文件为空"),
+
+    /**
      * 未知错误
      */
     UNKNOWN_ERROR(10000, "未知错误");

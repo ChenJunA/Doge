@@ -70,7 +70,7 @@ CREATE TABLE `doge_role_permision` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/* 动物分类表 0——待领养，1——领养中，2——已领养*/
+/* 动物分类表 1——流浪狗，2——宠物狗，3——推荐*/
 CREATE TABLE `doge_dog_type` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -81,7 +81,7 @@ CREATE TABLE `doge_dog_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/* 动物状态表 */
+/* 动物状态表 1——待领养，2——领养中，3——已领养*/
 CREATE TABLE `doge_dog_state` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -149,8 +149,8 @@ CREATE TABLE `doge_collection` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  
 
-/* 图片分类表 0——用户图片，1——动物图片，2——论坛图片*/
-CREATE TABLE `doge_dog_category` (
+/* 图片分类表 1——用户图片，2——动物图片，3——论坛图片*/
+CREATE TABLE `doge_picture_category` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -161,7 +161,7 @@ CREATE TABLE `doge_dog_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /* 图片表 */
-CREATE TABLE `doge_collection` (
+CREATE TABLE `doge_picture` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

@@ -1,5 +1,6 @@
 package com.doge.service;
 
+import com.doge.dto.DogDTO;
 import com.doge.entity.Dog;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public interface DogService {
      *
      * @param dogId
      */
-    Dog findById(Long dogId) throws Exception;
+    DogDTO getDogById(Long dogId) throws Exception;
 
     /**
      * 获取所有动物信息
@@ -49,4 +50,18 @@ public interface DogService {
      * @param typeId
      */
     List<Dog> listByType(Long typeId) throws Exception;
+
+    /**
+     * 根据送养人ID获取动物信息
+     *
+     * @param fosterId
+     */
+    List<Dog> listDogsByFosterId(Long fosterId) throws Exception;
+
+    /**
+     * 根据领养人ID获取动物信息
+     *
+     * @param adoptId
+     */
+    List<Dog> listDogsByAdoptId(Long adoptId) throws Exception;
 }

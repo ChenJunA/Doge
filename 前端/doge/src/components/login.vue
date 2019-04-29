@@ -61,7 +61,8 @@ export default {
                             this.$Message.error("密码错误");
                         } else {
                             this.$Message.success('登录成功！')
-                            this.$router.push('/home')
+                            this.$store.dispatch('login', resp.data.data)
+                            this.$router.push('home')
                         }
                     })
                     .catch(err => {

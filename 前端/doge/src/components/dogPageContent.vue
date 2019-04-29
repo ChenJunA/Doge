@@ -3,7 +3,7 @@
     <Content>
         <div class="page_content">
             <div class="carouselDiv">
-                <Carousel autoplay v-model="value2" loop :height="400" :radius-dot="true">
+                <Carousel autoplay loop :height="400" :radius-dot="true">
                     <CarouselItem>
                         <div class="demo-carousel">
                             <img src="../assets/1.jpg">
@@ -27,21 +27,21 @@
                 </Carousel>
             </div>
 
-            <div class="dogInfoDiv" style="margin-top:30px; font-size:14px;">
+            <div class="dogInfoDiv" style="margin-top:30px; font-size:14px;" v-if="this.dog">
                 <Row>
-                    <Col span="8">姓名：哎一古</Col>
-                    <Col span="8">年龄：21</Col>
-                    <Col span="8">性别：男</Col>
+                    <Col span="8">姓名：{{this.dog.dogName}}</Col>
+                    <Col span="8">年龄：{{this.dog.age}}</Col>
+                    <Col span="8">性别：{{this.dog.sex}}</Col>
                 </Row>
                 <br>
                 <Row>
-                    <Col span="8">地址：四川省绵阳市三台县</Col>
-                    <Col span="8">疫苗：已接种</Col>
-                    <Col span="8">类别：人类</Col>
+                    <Col span="8">地址：{{this.dog.address}}</Col>
+                    <Col span="8">疫苗：{{this.dog.vaccine}}</Col>
+                    <Col span="8">类别：{{this.dog.type}}</Col>
                 </Row>
                 <br>
                 <Row>
-                    <Col span="20">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</Col>
+                    <Col span="20">{{this.dog.dogDescribe}}</Col>
                     <Col span="4">
                         <Button type="info">收藏动物</Button><br/>
                         <Button type="info">发起领养</Button><br/>
@@ -67,7 +67,7 @@
             <Divider />
 
             <div class="stepsDiv">
-                <Steps :current="1">
+                <Steps v-if="this.dog && this.dog.state" :current="this.dog.state - 1">
                     <Step title="待领养" content="这里是该步骤的描述信息"></Step>
                     <Step title="领养中" content="这里是该步骤的描述信息"></Step>
                     <Step title="已领养" content="这里是该步骤的描述信息"></Step>
@@ -98,7 +98,7 @@
 
             <div class="dogCommentDiv">
                 <div>
-                    <Input v-model="value" placeholder="Enter something..." />
+                    <Input placeholder="Enter something..." />
                 </div>
                 <div>
                     <Button type="info" style="float:right">评论</Button>
@@ -115,7 +115,26 @@
 
 <script>
     export default {
-        
+        data () {
+            return {
+                dog: undefined
+            }
+        },
+        computed: {
+            
+        },
+        mounted() {
+            this.axios.get("http://localhost:80/getDogById/" + this.$store.state.dogId)
+            .then(resp => {
+                this.dog = resp.data.data
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
+        },
+        methods: {
+            
+        }
     }
 </script>
 

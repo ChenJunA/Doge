@@ -1,6 +1,7 @@
 package com.doge.controller;
 
 import com.doge.service.DogService;
+import com.doge.service.FileService;
 import com.doge.service.SystemService;
 import com.doge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,4 +20,6 @@ public class BaseController {
     UserService userService;
     @Autowired
     DogService dogService;
+    @Autowired
+    FileService fileService;
 }

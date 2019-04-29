@@ -1,20 +1,23 @@
 <template>
-   <div class="doge_card"  @click="dog()">
-        <div class="doge_card_left">
-            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
-        </div>
+    <div>
+    <div class="doge_card"  @click="dog()">
+            <div class="doge_card_left">
+                <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
+            </div>
 
-        <div class="doge_card_right">
-            <div>
-                <div style="font-size:16px; font-weight:bold">
-                    title
-                </div>
-                <Divider />
+            <div class="doge_card_right">
                 <div>
-                    descripe
+                    <div style="font-size:16px; font-weight:bold">
+                        {{item.dogName}}
+                    </div>
+                    <Divider />
+                    <div>
+                        {{item.dogDescribe}}
+                    </div>
                 </div>
             </div>
         </div>
+        <Divider />
     </div>
 </template>
 
@@ -22,11 +25,13 @@
 <script>
 
 export default {
-   methods:{
-       dog(){
-           this.$router.push('/dogPage')
-       }
-   }
+    props:["item"],
+    methods:{
+        dog(){
+            this.$store.dispatch('getDogById', this.item.id);
+            this.$router.push('/dogPage')
+        }
+    },
 }
 </script>
 

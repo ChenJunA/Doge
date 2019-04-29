@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService {
     public void insertUser(User user) throws Exception {
         //设置默认用户名为邮箱账号
         user.setUsername(user.getEmail());
+
+        //设置默认头像和封面图片
+        user.setAvatar("https://i.loli.net/2017/08/21/599a521472424.jpg");
+        user.setPicture("");
         userMapper.insertSelective(user);
         //发送邮件
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -83,8 +87,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) throws Exception {
+    public User updateUser(User user) throws Exception {
         userMapper.updateByPrimaryKeySelective(user);
+        User respUser = getUserById(user.getId());
+        return respUser;
     }
 
     @Override
@@ -93,7 +99,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByName(String userName) throws Exception {
+    public User getUserByName(String userName) throws Exception {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUsernameEqualTo(userName);
         List<User> users = userMapper.selectByExample(userExample);
@@ -105,13 +111,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void active(Long userId) throws Exception {
-        User user = findById(userId);
+        User user = getUserById(userId);
         user.setIsActive(true);
         userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
-    public User findByEmail(String email) throws Exception {
+    public User getUserByEmail(String email) throws Exception {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andEmailEqualTo(email);
         List<User> users = userMapper.selectByExample(userExample);
@@ -122,14 +128,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long userId) throws Exception {
+    public User getUserById(Long userId) throws Exception {
         User user = userMapper.selectByPrimaryKey(userId);
         return user;
     }
 
     @Override
     public void ban(Long userId) throws Exception {
-        User user = findById(userId);
+        User user = getUserById(userId);
         user.setIsBan(true);
         userMapper.updateByPrimaryKeySelective(user);
     }

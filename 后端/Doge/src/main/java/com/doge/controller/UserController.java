@@ -6,6 +6,7 @@ import com.doge.util.RespUtil;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -35,7 +36,8 @@ public class UserController extends BaseController {
                 return RespUtil.fail(StatusCode.PASSWORD_ERROR);
             }
         }
-        return RespUtil.success();
+        User respUser = (User) SecurityUtils.getSubject().getPrincipal();
+        return RespUtil.success(respUser);
     }
 
     /**
@@ -63,7 +65,7 @@ public class UserController extends BaseController {
     public RespUtil<User> register(@RequestBody User user) throws Exception {
         String email = user.getEmail();
         //邮箱已被注册
-        if (userService.findByEmail(email) != null) {
+        if (userService.getUserByEmail(email) != null) {
             return RespUtil.fail(StatusCode.EMAIL_USEED);
         }
         userService.insertUser(user);
@@ -92,13 +94,27 @@ public class UserController extends BaseController {
      */
     @ApiOperation("根据邮箱查找用户")
     @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "String")
-    @GetMapping("/findByEmail")
-    public RespUtil<User> findByEmail(String email) throws Exception {
-        User emailUser = userService.findByEmail(email);
+    @GetMapping("/getUserByEmail")
+    public RespUtil<User> getUserByEmail(String email) throws Exception {
+        User emailUser = userService.getUserByEmail(email);
         if (emailUser != null) {
             return RespUtil.fail(StatusCode.EMAIL_USEED);
         }
         return RespUtil.success();
+    }
+
+    /**
+     * 根据ID查找用户
+     *
+     * @param userId ID
+     * @return 状态信息
+     */
+    @ApiOperation("根据ID查找用户")
+    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
+    @GetMapping("/getUserById")
+    public RespUtil<User> getUserById(Long userId) throws Exception {
+        User user = userService.getUserById(userId);
+        return RespUtil.success(user);
     }
 
     /**
@@ -113,5 +129,19 @@ public class UserController extends BaseController {
     public RespUtil<User> ban(@PathVariable Long userId) throws Exception {
         userService.ban(userId);
         return RespUtil.success();
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 用户信息
+     * @return 状态信息
+     */
+    @ApiOperation("更新用户信息")
+    @ApiImplicitParam(name = "user", value = "用户信息", required = true, dataType = "User")
+    @PutMapping("/updateUser")
+    public RespUtil<User> updateUser(@RequestBody User user) throws Exception {
+        User respUser = userService.updateUser(user);
+        return RespUtil.success(respUser);
     }
 }

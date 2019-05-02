@@ -2,10 +2,13 @@ package com.doge.service.impl;
 
 import com.doge.entity.Picture;
 import com.doge.entity.PictureCategory;
+import com.doge.entity.User;
 import com.doge.mapper.DogMapper;
 import com.doge.mapper.PictureCategoryMapper;
 import com.doge.mapper.PictureMapper;
+import com.doge.mapper.UserMapper;
 import com.doge.service.FileService;
+import com.doge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ClassUtils;
@@ -27,9 +30,57 @@ public class FileServiceImpl implements FileService {
     PictureCategoryMapper pictureCategoryMapper;
     @Autowired
     DogMapper dogMapper;
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    UserService userService;
 
     @Override
     public void dogPicsUpload(MultipartFile file, Long dogId) throws Exception {
+        //获取文件名
+        String fileName = file.getOriginalFilename();
+        //保存文件
+        fileUpload(file);
+
+        //doge_picture_category表对应类型下图片数量+1
+        PictureCategory pictureCategory = pictureCategoryMapper.selectByPrimaryKey((long) 2);
+        pictureCategory.setPictureCategoryNumber((pictureCategory.getPictureCategoryNumber() + 1));
+        pictureCategoryMapper.updateByPrimaryKeySelective(pictureCategory);
+
+        //doge_picture表增加一条数据
+        Picture picture = new Picture();
+        picture.setCategory((long) 2);
+        picture.setPicture("http://localhost/" + fileName);
+        picture.setxId(dogId);
+        pictureMapper.insertSelective(picture);
+
+    }
+
+    @Override
+    public User userPicUpload(MultipartFile file, Long userId) throws Exception {
+        //获取文件名
+        String fileName = file.getOriginalFilename();
+        //保存文件
+        fileUpload(file);
+        User user = userService.getUserById(userId);
+        user.setPicture("http://localhost/" + fileName);
+        userMapper.updateByPrimaryKeySelective(user);
+        return user;
+    }
+
+    @Override
+    public User userAvatarUpload(MultipartFile file, Long userId) throws Exception {
+        //获取文件名
+        String fileName = file.getOriginalFilename();
+        //保存文件
+        fileUpload(file);
+        User user = userService.getUserById(userId);
+        user.setAvatar("http://localhost/" + fileName);
+        userMapper.updateByPrimaryKeySelective(user);
+        return user;
+    }
+
+    public void fileUpload(MultipartFile file) throws Exception {
         if (file.isEmpty()) {
 
         }
@@ -49,18 +100,5 @@ public class FileServiceImpl implements FileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //doge_picture_category表对应类型下图片数量+1
-        PictureCategory pictureCategory = pictureCategoryMapper.selectByPrimaryKey((long) 2);
-        pictureCategory.setPictureCategoryNumber((pictureCategory.getPictureCategoryNumber() + 1));
-        pictureCategoryMapper.updateByPrimaryKeySelective(pictureCategory);
-
-        //doge_picture表增加一条数据
-        Picture picture = new Picture();
-        picture.setCategory((long) 2);
-        picture.setPicture("http://localhost/" + fileName);
-        picture.setxId(dogId);
-        pictureMapper.insertSelective(picture);
-
     }
 }

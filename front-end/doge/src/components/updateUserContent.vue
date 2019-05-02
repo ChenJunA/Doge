@@ -5,14 +5,45 @@
                 <div class="Card">
                     <div class="UserCoverEditor">
                         <div class="userCover">
-                            <img class="userCover-image" src="../assets/avatar.png"/>
+                            <!-- <img class="userCover-image" src="../assets/avatar.png"/> -->
+                            <Upload
+                                :format="['jpg','jpeg','png']"
+                                :max-size="2048"
+                                action="http://localhost:80/userPicUpload"
+                                :show-upload-list="false"
+                                :on-success="picHandleSuccess"
+                                :data= "postData"
+                                style="width:100%"
+                                class="cssCover">
+                                <div style="line-height: 240px;"  class="demo-upload-list">
+                                    <img class="userCover-image" :src="updateData.picture"/>
+                                    <div class="demo-upload-list-cover">
+                                        <Icon type="ios-camera" size="20"></Icon>
+                                    </div>
+                                </div>
+                            </Upload>
                         </div>
                     </div>
                      
                     <div class="updateUser_information">
                         <div class="user_information_left">
                             <div>
-                                <Avatar shape="square" src="https://i.loli.net/2017/08/21/599a521472424.jpg" style="width:160px; height:160px"/>
+                                <Upload
+                                    :format="['jpg','jpeg','png']"
+                                    :max-size="2048"
+                                    :data= "postData"
+                                    :show-upload-list="false"
+                                    :on-success="AvatarHandleSuccess"
+                                    action="http://localhost:80/userAvatarUpload"
+                                    style="display: inline-block;width:160px;">
+                                    <div style="width:160px; height:160px;line-height: 160px;"  class="demo-upload-list">
+                                        <Avatar shape="square" :src="updateData.avatar" style="width:160px; height:160px"/>
+                                        <div class="demo-upload-list-cover">
+                                           <Icon type="ios-camera" size="20"></Icon>
+                                        </div>
+                                    </div>
+                                </Upload>
+                                
                             </div>
                         </div>
 
@@ -54,7 +85,7 @@
                                 </div>
                                 <Divider />
                                 <div>
-                                    <Button type="primary" @click="updateUser()">保存</Button>
+                                    <Button type="primary" @click="updateUser()" style="width:25%; float:right; margin-bottom:100px">保存</Button>
                                 </div>
                             </div>
                         </Form>
@@ -78,8 +109,13 @@ import dogeCard from '@/components/dogeCard' //引入dogeCard组件
                     sex: this.$store.state.user.sex,
                     biography:  this.$store.state.user.biography,
                     address: this.$store.state.user.address,
-                    phoneNumber:this.$store.state.user.phoneNumber
+                    phoneNumber:this.$store.state.user.phoneNumber,
+                    avatar:this.$store.state.user.avatar,
+                    picture:this.$store.state.user.picture
                 },
+                postData:{
+                    userId: this.$store.state.user.id
+                }
             }
         },
         computed: {
@@ -103,6 +139,14 @@ import dogeCard from '@/components/dogeCard' //引入dogeCard组件
                 .catch(err => {
                     this.$Message.error("请求出错");
                 });
+            },
+            picHandleSuccess(res, file){
+                this.updateData.picture = "http://localhost/" + file.name
+                this.$store.dispatch('login', res.data)
+            },
+            AvatarHandleSuccess(res, file){
+                this.updateData.avatar = "http://localhost/" + file.name
+               this.$store.dispatch('login', res.data)
             }
         }
     }
@@ -147,5 +191,42 @@ import dogeCard from '@/components/dogeCard' //引入dogeCard组件
         width: 70%;
         float: right;
         margin-right: 50px
+    }
+    .demo-upload-list{
+        width: 100%;
+        height: 240px;
+        text-align: center;
+        line-height: 240px;
+        /* border: 1px solid transparent; */
+        border-radius: 4px;
+        overflow: hidden;
+        /* background: #fff; */
+        position: relative;
+        box-shadow: 0 1px 1px rgba(0,0,0,.2);
+    }
+    /* .demo-upload-list img{
+        width: 100%;
+        height: 100%;
+    } */
+    .demo-upload-list-cover{
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,.6);
+    }
+    .demo-upload-list:hover .demo-upload-list-cover{
+        display: block;
+    }
+    .demo-upload-list-cover i{
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0 2px;
+    }
+    .cssCover .ivu-upload-select{
+        display: inline;
     }
 </style>

@@ -5,14 +5,14 @@
                 <div class="Card">
                     <div class="UserCoverEditor">
                         <div class="userCover">
-                            <img class="userCover-image" src="../assets/avatar.png"/>
+                            <img class="userCover-image" :src="user.picture"/>
                         </div>
                     </div>
                      
                     <div class="user_information">
                         <div class="user_information_left">
                             <div>
-                                <Avatar shape="square" src="https://i.loli.net/2017/08/21/599a521472424.jpg" style="width:160px; height:160px"/>
+                                <Avatar shape="square" :src="user.avatar" style="width:160px; height:160px"/>
                             </div>
                         </div>
                         <div class="user_information_right">

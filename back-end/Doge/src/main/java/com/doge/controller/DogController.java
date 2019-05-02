@@ -93,7 +93,7 @@ public class DogController extends BaseController {
     @ApiOperation("根据分类ID查询动物信息")
     @ApiImplicitParam(name = "typeId", value = "分类ID", required = true, dataType = "Long")
     @GetMapping("/listByType/{typeId}")
-    public RespUtil<Dog> listByType(@PathVariable Long typeId) throws Exception{
+    public RespUtil<List<Dog>> listByType(@PathVariable Long typeId) throws Exception{
         List<Dog> dogs = dogService.listByType(typeId);
         return RespUtil.success(dogs);
     }

@@ -116,6 +116,7 @@ public class DogServiceImpl implements DogService {
         dogExample.setOrderByClause("id desc");
         dogExample.createCriteria().andFosterEqualTo(fosterId);
         List<Dog> dogs = dogMapper.selectByExample(dogExample);
+        setDogPicture(dogs);
         return dogs;
     }
 
@@ -125,6 +126,7 @@ public class DogServiceImpl implements DogService {
         dogExample.setOrderByClause("id desc");
         dogExample.createCriteria().andAdoptEqualTo(adoptId);
         List<Dog> dogs = dogMapper.selectByExample(dogExample);
+        setDogPicture(dogs);
         return dogs;
     }
 

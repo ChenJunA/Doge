@@ -1,12 +1,7 @@
 package com.doge.service.impl;
 
-import com.doge.entity.Picture;
-import com.doge.entity.PictureCategory;
-import com.doge.entity.User;
-import com.doge.mapper.DogMapper;
-import com.doge.mapper.PictureCategoryMapper;
-import com.doge.mapper.PictureMapper;
-import com.doge.mapper.UserMapper;
+import com.doge.entity.*;
+import com.doge.mapper.*;
 import com.doge.service.FileService;
 import com.doge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Description: 文件上传Service
@@ -34,6 +30,8 @@ public class FileServiceImpl implements FileService {
     UserMapper userMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    MaterialMapper materialMapper;
 
     @Override
     public void dogPicsUpload(MultipartFile file, Long dogId) throws Exception {
@@ -78,6 +76,48 @@ public class FileServiceImpl implements FileService {
         user.setAvatar("http://localhost/" + fileName);
         userMapper.updateByPrimaryKeySelective(user);
         return user;
+    }
+
+    @Override
+    public List<Material> listAllMaterial() throws Exception {
+        MaterialExample materialExample = new MaterialExample();
+        materialExample.setOrderByClause("id desc");
+        List<Material> materials = materialMapper.selectByExample(materialExample);
+        return materials;
+    }
+
+    @Override
+    public List<Material> materialUpload(MultipartFile file, Long userId) throws Exception {
+        //获取文件名
+        String fileName = file.getOriginalFilename();
+        //保存文件
+        fileUpload(file);
+
+        Material material = new Material();
+        material.setMaterialName(fileName);
+        material.setMaterial("http://localhost/" + fileName);
+        material.setUserId(userId);
+        materialMapper.insertSelective(material);
+
+        //获取所有文件
+        List<Material> materials = listAllMaterial();
+        return materials;
+    }
+
+    @Override
+    public List<Material> materialDescribeUpload(Material material) throws Exception {
+        List<Material> materials = listAllMaterial();
+        material.setId(materials.get(0).getId());
+        materialMapper.updateByPrimaryKeySelective(material);
+        List<Material> respMaterials = listAllMaterial();
+        return respMaterials;
+    }
+
+    @Override
+    public String materialDownload(Long materialId) throws Exception {
+        Material material = materialMapper.selectByPrimaryKey(materialId);
+        return material.getMaterialName();
+
     }
 
     public void fileUpload(MultipartFile file) throws Exception {

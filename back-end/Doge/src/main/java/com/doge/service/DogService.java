@@ -2,6 +2,9 @@ package com.doge.service;
 
 import com.doge.dto.DogDTO;
 import com.doge.entity.Dog;
+import com.doge.entity.DogCollection;
+import com.doge.entity.DogComment;
+import com.doge.entity.User;
 
 import java.util.List;
 
@@ -66,8 +69,44 @@ public interface DogService {
     List<Dog> listDogsByAdoptId(Long adoptId) throws Exception;
 
     /**
-     * 根据领养人ID获取动物信息
+     * 根据收藏人ID获取动物信息
      *
+     * @param collectionId
+     */
+    List<Dog> listDogsByCollectionId(Long collectionId) throws Exception;
+
+    /**
+     * 获取最新动物ID
      */
     Long latestDogId() throws Exception;
+
+    /**
+     * 发起领养
+     *
+     * @param dogId
+     * @param adoptId
+     */
+    DogDTO toAdopt(Long dogId, Long adoptId) throws Exception;
+
+    /**
+     * 收藏动物
+     *
+     * @param dogCollection
+     */
+    void toCollect(DogCollection dogCollection) throws Exception;
+
+    /**
+     * 判断用户是否收藏该动物
+     *
+     * @param userId
+     * @param dogId
+     */
+    List<DogCollection> isCollect(Long userId, Long dogId) throws Exception;
+
+    /**
+     * 确认领养
+     *
+     * @param dogId
+     */
+    DogDTO confirmAdopt(Long dogId) throws Exception;
 }

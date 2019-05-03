@@ -55,26 +55,29 @@
             <div class="page_content">
                     <div style="text-align:center; font-size:16px;padding-top:15px">
                          <Row>
-                            <Col span="8">
+                            <Col span="12">
                                 <Row>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <a @click="myPulish(user.id)" style="color:gray">我的发布</a>
                                     </Col>
-                                    <Col span="8">
-                                        <a @click="myPulish(user.id)" style="color:gray">我的帖子</a>
-                                    </Col>
-                                    <Col span="8">
+                                    <Col span="6">
                                         <a @click="myAdopt(user.id)" style="color:gray">我的领养</a>
+                                    </Col>
+                                    <Col span="6">
+                                        <a @click="myCollection(user.id)" style="color:gray">我的收藏</a>
+                                    </Col>
+                                    <Col span="6">
+                                        <a @click="myPulish(user.id)" style="color:gray">我的帖子</a>
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col span="8"></Col>
-                            <Col span="8"></Col>
+                            <Col span="6"></Col>
+                            <Col span="6"></Col>
                         </Row>
                     </div>
                      <Divider style="margin-top:15px"/>
                      
-                    <dogeCard  v-bind:item="doge" v-for="doge in dogeList"></dogeCard>
+                    <dogeCard  v-bind:item="doge" v-for="(doge,index) in dogeList" :key="index"></dogeCard>
                 </div>
         </Content>
     </Layout>
@@ -118,6 +121,20 @@ import dogeCard from '@/components/dogeCard' //引入dogeCard组件
                     }
                 })
                 .then(resp => {
+                    this.dogeList = resp.data.data
+                })
+                .catch(err => {
+                    this.$Message.error("请求出错");
+                });
+            },
+            myCollection(collectionId){
+                this.axios.get("http://localhost:80/listDogsByCollectionId",{
+                    params:{
+                        collectionId: collectionId
+                    }
+                })
+                .then(resp => {
+                    console.log(this.dogeList)
                     this.dogeList = resp.data.data
                 })
                 .catch(err => {

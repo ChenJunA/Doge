@@ -1,10 +1,8 @@
 package com.doge.service.impl;
 
 import com.doge.dto.DogDTO;
-import com.doge.entity.Dog;
-import com.doge.entity.DogExample;
-import com.doge.entity.Picture;
-import com.doge.entity.PictureExample;
+import com.doge.entity.*;
+import com.doge.mapper.DogCollectionMapper;
 import com.doge.mapper.DogMapper;
 import com.doge.mapper.PictureMapper;
 import com.doge.service.DogService;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +26,8 @@ public class DogServiceImpl implements DogService {
     DogMapper dogMapper;
     @Autowired
     PictureMapper pictureMapper;
+    @Autowired
+    DogCollectionMapper dogCollectionMapper;
 
 
     @Override
@@ -131,10 +132,57 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
+    public List<Dog> listDogsByCollectionId(Long collectionId) throws Exception {
+        DogCollectionExample dogCollectionExample = new DogCollectionExample();
+        dogCollectionExample.createCriteria().andUserIdEqualTo(collectionId);
+        List<DogCollection> dogCollections = dogCollectionMapper.selectByExample(dogCollectionExample);
+        List<Dog> dogs = new ArrayList<>();
+        for (DogCollection dogCollection : dogCollections){
+            Dog dog = dogMapper.selectByPrimaryKey(dogCollection.getDogId());
+            dogs.add(dog);
+        }
+        setDogPicture(dogs);
+        return dogs;
+    }
+
+    @Override
     public Long latestDogId() throws Exception {
         List<Dog> dogs = listAll();
         return dogs.get(0).getId();
 
+    }
+
+    @Override
+    public DogDTO toAdopt(Long dogId, Long adoptId) throws Exception {
+        Dog dog = dogMapper.selectByPrimaryKey(dogId);
+        dog.setAdopt(adoptId);
+        dog.setState((long) 2);
+        dog.setAdoptTime(new Date());
+        dogMapper.updateByPrimaryKeySelective(dog);
+        DogDTO DogDTO = getDogById(dogId);
+        return DogDTO;
+    }
+
+    @Override
+    public void toCollect(DogCollection dogCollection) throws Exception {
+        dogCollectionMapper.insertSelective(dogCollection);
+    }
+
+    @Override
+    public List<DogCollection> isCollect(Long userId, Long dogId) throws Exception {
+        DogCollectionExample dogCollectionExample = new DogCollectionExample();
+        dogCollectionExample.createCriteria().andUserIdEqualTo(userId).andDogIdEqualTo(dogId);
+        List<DogCollection> dogCollections = dogCollectionMapper.selectByExample(dogCollectionExample);
+        return dogCollections;
+    }
+
+    @Override
+    public DogDTO confirmAdopt(Long dogId) throws Exception {
+        Dog dog = dogMapper.selectByPrimaryKey(dogId);
+        dog.setState((long) 3);
+        dogMapper.updateByPrimaryKeySelective(dog);
+        DogDTO DogDTO = getDogById(dogId);
+        return DogDTO;
     }
 
     void setDogPicture(List<Dog> dogs){

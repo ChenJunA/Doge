@@ -7,11 +7,11 @@
         <div class="material_card_right">
             <div>
                 <div style="font-size:16px; font-weight:bold">
-                    帖子标题
+                    {{item.materialName}}
                 </div>
                 <Divider />
                 <div>
-                    帖子内容
+                    {{item.materialDescribe}}
                 </div>
             </div>
         </div>
@@ -22,11 +22,22 @@
 <script>
 
 export default {
-   methods:{
-        material(){
-            this.$Message.success("下载资料");
-        }
-   }
+    props:["item"],
+    methods:{
+            material(){
+                this.axios.get("http://localhost:80/materialDownload",{
+                    params:{
+                        materialId: this.item.id
+                    }
+                })
+                .then(resp => {
+                    this.materialList = resp.data.data
+                })
+                .catch(err => {
+                    this.$Message.error("请求出错");
+                });
+            }
+    }
 }
 </script>
 

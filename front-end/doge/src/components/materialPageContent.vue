@@ -20,7 +20,7 @@
                                         class="coverCss">
                                         <Button icon="ios-cloud-upload-outline" style="width:100%">上传资料</Button>
                                     </Upload>
-                            </Modal>
+                                </Modal>
                             </Col>
                         </Row>
                     </Col>

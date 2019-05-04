@@ -1,5 +1,6 @@
 <template>
-   <div class="material_card"  @click="material()">
+<div style="margin-bottom:24px">
+    <div class="material_card"  @click="material()">
         <div class="material_card_left">
             <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
         </div>
@@ -15,7 +16,9 @@
                 </div>
             </div>
         </div>
+        <Divider />
     </div>
+</div>
 </template>
 
 
@@ -57,5 +60,12 @@ export default {
     width: 70%;
     float: right;
     margin-top: 25px;
+}
+.material_card .ivu-divider-horizontal{
+    height: 1px;
+    width: 100%;
+    min-width: 100%;
+    margin: 24px 0;
+    clear: both;
 }
 </style>

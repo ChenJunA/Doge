@@ -1,32 +1,36 @@
 <template>
-   <div class="forum_card"  @click="forum()">
+<div style="margin-bottom:24px">
+    <div class="forum_card"  @click="forum()">
         <div class="forum_card_left">
-            <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
+            <img :src="item.picture" style="width:120px; height:120px; margin:auto">
         </div>
 
         <div class="forum_card_right">
             <div>
                 <div style="font-size:16px; font-weight:bold">
-                    帖子标题
+                    {{item.title}}
                 </div>
                 <Divider />
                 <div>
-                    帖子内容
+                    {{item.content}}
                 </div>
             </div>
         </div>
+        <Divider />
     </div>
+</div>
 </template>
 
 
 <script>
 
 export default {
-   methods:{
-        forum(){
-            this.$router.push('/forumInfoPage')
-        }
-   }
+    props:["item"],
+    methods:{
+            forum(){
+                this.$router.push('/forumInfoPage')
+            }
+    }
 }
 </script>
 
@@ -45,5 +49,12 @@ export default {
     width: 70%;
     float: right;
     margin-top: 25px;
+}
+.forum_card .ivu-divider-horizontal{
+    height: 1px;
+    width: 100%;
+    min-width: 100%;
+    margin: 24px 0;
+    clear: both;
 }
 </style>

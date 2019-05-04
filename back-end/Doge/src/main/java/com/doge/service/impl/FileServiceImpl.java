@@ -55,6 +55,26 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void forumPicsUpload(MultipartFile file, Long articleId) throws Exception {
+        //获取文件名
+        String fileName = file.getOriginalFilename();
+        //保存文件
+        fileUpload(file);
+
+        //doge_picture_category表对应类型下图片数量+1
+        PictureCategory pictureCategory = pictureCategoryMapper.selectByPrimaryKey((long) 3);
+        pictureCategory.setPictureCategoryNumber((pictureCategory.getPictureCategoryNumber() + 1));
+        pictureCategoryMapper.updateByPrimaryKeySelective(pictureCategory);
+
+        //doge_picture表增加一条数据
+        Picture picture = new Picture();
+        picture.setCategory((long) 3);
+        picture.setPicture("http://localhost/" + fileName);
+        picture.setxId(articleId);
+        pictureMapper.insertSelective(picture);
+    }
+
+    @Override
     public User userPicUpload(MultipartFile file, Long userId) throws Exception {
         //获取文件名
         String fileName = file.getOriginalFilename();

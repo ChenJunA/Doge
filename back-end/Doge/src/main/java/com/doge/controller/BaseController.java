@@ -21,4 +21,6 @@ public class BaseController {
     FileService fileService;
     @Autowired
     DogCommentService dogCommentService;
+    @Autowired
+    ArticleService articleService;
 }

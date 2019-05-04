@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="doge_card"  @click="dog()">
+        <div class="doge_card"  @click="dog()">
             <div class="doge_card_left">
                 <img :src="item.picture" style="width:120px; height:120px; margin:auto">
             </div>

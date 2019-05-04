@@ -34,8 +34,26 @@ public class FileController extends BaseController {
             @ApiImplicitParam(name = "dogId", value = "动物ID", required = true, dataType = "Long")
     })
     @PostMapping("/dogPicsUpload")
-    public RespUtil<User> dogPicsUpload(MultipartFile file, Long dogId) throws Exception {
-        fileService.dogPicsUpload(file, dogId);
+    public RespUtil<User> dogPicsUpload(MultipartFile file, Long articleId) throws Exception {
+        fileService.dogPicsUpload(file, articleId);
+        return RespUtil.success();
+    }
+
+    /**
+     * 上传论坛图片
+     *
+     * @param file file 文件内容
+     * @param file userId 用户ID
+     * @return 状态信息
+     */
+    @ApiOperation("上传论坛图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "文件内容", required = true, dataType = "MultipartFile"),
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
+    })
+    @PostMapping("/forumPicsUpload")
+    public RespUtil<User> forumPicsUpload(MultipartFile file, Long articleId) throws Exception {
+        fileService.forumPicsUpload(file, articleId);
         return RespUtil.success();
     }
 

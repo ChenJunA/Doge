@@ -21,6 +21,14 @@ public interface FileService {
     void dogPicsUpload(MultipartFile file, Long dogId) throws Exception;
 
     /**
+     * 上传论坛图片
+     *
+     * @param file 文件信息
+     * @param articleId 用户ID
+     */
+    void forumPicsUpload(MultipartFile file, Long articleId) throws Exception;
+
+    /**
      * 上传用户封面图片
      *
      * @param file 文件信息

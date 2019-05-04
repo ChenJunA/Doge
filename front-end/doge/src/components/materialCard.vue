@@ -25,17 +25,18 @@ export default {
     props:["item"],
     methods:{
             material(){
-                this.axios.get("http://localhost:80/materialDownload",{
-                    params:{
-                        materialId: this.item.id
-                    }
-                })
-                .then(resp => {
-                    this.materialList = resp.data.data
-                })
-                .catch(err => {
-                    this.$Message.error("请求出错");
-                });
+                // this.axios.get("http://localhost:80/materialDownload",{
+                //     params:{
+                //         materialId: this.item.id
+                //     }
+                // })
+                // .then(resp => {
+                //     this.materialList = resp.data.data
+                // })
+                // .catch(err => {
+                //     this.$Message.error("请求出错");
+                // });
+                window.location.href="http://localhost:80/materialDownload?materialId=" + this.item.id
             }
     }
 }

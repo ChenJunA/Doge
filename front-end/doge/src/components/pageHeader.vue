@@ -77,7 +77,9 @@
                         </Col>
                         <Col span="8">
                             <Poptip>
+                                <a style="color:gray">
                                 <Avatar shape="square" :src="user.avatar"></Avatar>
+                                </a>
                                 <div class="api" slot="content">
                                     <div class="poptip_icon">
                                         <Icon type="ios-contact" />&nbsp;<a @click="toUserPage()" style="color:gray">主页</a>

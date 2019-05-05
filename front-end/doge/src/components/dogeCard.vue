@@ -1,5 +1,6 @@
 <template>
     <div>
+        <a style="color:gray">
         <div class="doge_card"  @click="dog()">
             <div class="doge_card_left">
                 <img :src="item.picture" style="width:120px; height:120px; margin:auto">
@@ -18,6 +19,7 @@
             </div>
         </div>
         <Divider />
+        </a>
     </div>
 </template>
 

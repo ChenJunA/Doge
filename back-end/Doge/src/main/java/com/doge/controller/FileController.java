@@ -1,5 +1,6 @@
 package com.doge.controller;
 
+import com.doge.entity.Article;
 import com.doge.entity.Material;
 import com.doge.entity.User;
 import com.doge.util.RespUtil;
@@ -52,7 +53,7 @@ public class FileController extends BaseController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
     })
     @PostMapping("/forumPicsUpload")
-    public RespUtil<User> forumPicsUpload(MultipartFile file, Long articleId) throws Exception {
+    public RespUtil<Article> forumPicsUpload(MultipartFile file, Long articleId) throws Exception {
         fileService.forumPicsUpload(file, articleId);
         return RespUtil.success();
     }

@@ -193,6 +193,8 @@ CREATE TABLE `doge_reply` (
   `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `user_id` bigint UNSIGNED NOT NULL COMMENT '回复用户ID',
   `article_id` bigint UNSIGNED NOT NULL COMMENT '文章ID',
+  `parent_id` bigint UNSIGNED NOT NULL COMMENT '父级评论ID',
+  `reply_id` bigint UNSIGNED NOT NULL COMMENT '回复的那条回复ID',
   `content` varchar(1000) NOT NULL DEFAULT '' COMMENT '回复内容',
   `is_delete` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否删除，默认为0未删除，1为已删除',
   PRIMARY KEY (`id`)

@@ -1,7 +1,9 @@
 package com.doge.service;
 
+import com.doge.entity.Follow;
 import com.doge.entity.User;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,4 +75,20 @@ public interface UserService {
      * @param userId
      */
     void ban(Long userId) throws Exception;
+
+    /**
+     * 关注
+     *
+     * @param userId
+     * @param followerId
+     */
+    User toFollow(Long userId, Long followerId) throws Exception;
+
+    /**
+     * 是否关注了
+     *
+     * @param userId
+     * @param followerId
+     */
+    List<Follow> isFollowed(Long userId, Long followerId) throws Exception;
 }

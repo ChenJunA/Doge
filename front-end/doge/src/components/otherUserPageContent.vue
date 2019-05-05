@@ -31,19 +31,18 @@
                                 <div style="margin-bottom:50px;font-size:14px">
                                    <div style="float:left">
                                        <div>关注了</div>
-                                       <div>{{user.followersNumber}}</div>
+                                       <div>{{user.followingNumber}}</div>
                                    </div>
                                    <Divider type="vertical" />
                                    <div style="float:right">
                                        <div>关注者</div>
-                                       <div>{{user.followingNumber}}</div>
+                                       <div>{{user.followersNumber}}</div>
                                    </div>
                                 </div>
                                 
                                 <div style="text-align:center">
-                                    <router-link :to="{name: 'updateUser'}">
-                                        <Button type="primary" ghost >编辑个人资料</Button>
-                                    </router-link>
+                                    <Button type="primary" ghost style="width:100px" @click="toFollow()" v-if="isFollowed === false">关注</Button>
+                                    <Button type="primary" ghost style="width:100px" @click="toFollow()" v-else disabled>关注</Button>
                                 </div>
                             </div>
                         </div>
@@ -58,16 +57,16 @@
                             <Col span="12">
                                 <Row>
                                     <Col span="6">
-                                        <a @click="myPulish(user.id)" style="color:gray">我的发布</a>
+                                        <a @click="myPulish(user.id)" style="color:gray">TA的发布</a>
                                     </Col>
                                     <Col span="6">
-                                        <a @click="myAdopt(user.id)" style="color:gray">我的领养</a>
+                                        <a @click="myAdopt(user.id)" style="color:gray">TA的领养</a>
                                     </Col>
                                     <Col span="6">
-                                        <a @click="myCollection(user.id)" style="color:gray">我的收藏</a>
+                                        <a @click="myCollection(user.id)" style="color:gray">TA的收藏</a>
                                     </Col>
                                     <Col span="6">
-                                        <a @click="myArticles(user.id)" style="color:gray">我的帖子</a>
+                                        <a @click="myArticles(user.id)" style="color:gray">TA的帖子</a>
                                     </Col>
                                 </Row>
                             </Col>
@@ -91,14 +90,13 @@ import forumCard from '@/components/forumCard' //引入dogeCard组件
         name: "userPageContent",
         data() {
             return {
+                user: '',
                 dogeList:"",
-                forumList:''
+                forumList:'',
+                isFollowed:true
             }
         },
         computed: {
-            user () {
-                return this.$store.state.user
-            }
         },
         components:{
             'dogeCard': dogeCard,
@@ -160,51 +158,54 @@ import forumCard from '@/components/forumCard' //引入dogeCard组件
                 .catch(err => {
                     this.$Message.error("请求出错");
                 });
+            },
+            toFollow(){
+                this.isFollowed = true;
+                this.axios.post("http://localhost:80/toFollow",{
+                    userId: this.$store.state.user.id,
+                    followerId:this.$store.state.otherUserId
+                })
+                .then(resp => {
+                    this.user = resp.data.data
+                })
+                .catch(err => {
+                    this.$Message.error("请求出错");
+                });
             }
         },
         mounted: function () {
-            this.myPulish(this.$store.state.user.id)
+            this.axios.get("http://localhost:80/getUserById",{
+                params:{
+                    userId: this.$store.state.otherUserId
+                }
+            })
+            .then(resp => {
+                this.user = resp.data.data
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
+
+            this.axios.get("http://localhost:80/isFollowed",{
+                params:{
+                    userId: this.$store.state.user.id,
+                    followerId:this.$store.state.otherUserId
+                }
+            })
+            .then(resp => {
+                if(resp.data.data.length === 0){
+                    this.isFollowed = false;
+                }
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
+
+            this.myPulish(this.$store.state.otherUserId)
         }
     }
 </script>
 
 <style>
-    .user_content {
-        margin: auto;
-        margin-top: 10px;
-        width: 70%;
-    }
-   
-    .userCover{
-        border-top-right-radius: 1px;
-        border-top-left-radius: 1px;
-    }
-    .userCover-image{
-        width:100%; 
-        height: 240px;
-        object-fit: cover;
-    }
-    .Card {
-        background: #fff;
-        overflow: hidden;
-        border-radius: 2px;
-        box-sizing: border-box;
-    }
-    .UserCoverEditor {
-        position: relative;
-    }
-
-    .user_information {
-        height: 160px;
-    }
-    .user_information_left {
-        width: 20%;
-        text-align: center;
-        margin-top: -25px;
-        float: left;
-    }
-    .user_information_right {
-        width: 80%;
-        float: right;
-    }
+    
 </style>

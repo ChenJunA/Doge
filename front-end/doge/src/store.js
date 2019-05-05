@@ -8,7 +8,9 @@ export default new Vuex.Store({
     user: undefined,
     dogId: '',
     latestDogId: '',
-    latestArticleId: ''
+    articleId: '',
+    latestArticleId: '',
+    otherUserId: ''
   },
   mutations: {
     login (state, user) {
@@ -23,8 +25,14 @@ export default new Vuex.Store({
     getLatestDogId (state, latestDogId) {
       state.latestDogId = latestDogId
     },
+    getArticleById (state, articleId) {
+      state.articleId = articleId
+    },
     getLatestArticleId (state, latestArticleId) {
       state.latestArticleId = latestArticleId
+    },
+    getOtherUserId (state, otherUserId) {
+      state.otherUserId = otherUserId
     }
 
   },
@@ -41,8 +49,14 @@ export default new Vuex.Store({
     getLatestDogId (context, latestDogId) {
       context.commit('getLatestDogId', latestDogId)
     },
+    getArticleById (context, articleId) {
+      context.commit('getArticleById', articleId)
+    },
     getLatestArticleId (context, latestArticleId) {
       context.commit('getLatestArticleId', latestArticleId)
+    },
+    getOtherUserId (context, otherUserId) {
+      context.commit('getOtherUserId', otherUserId)
     }
   }
 })

@@ -1,8 +1,11 @@
 package com.doge.service.impl;
 
+import com.doge.entity.Follow;
+import com.doge.entity.FollowExample;
 import com.doge.entity.User;
 import com.doge.entity.UserExample;
 import com.doge.enums.StatusCode;
+import com.doge.mapper.FollowMapper;
 import com.doge.mapper.UserMapper;
 import com.doge.service.UserService;
 import io.swagger.models.auth.In;
@@ -29,11 +32,13 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl  implements UserService {
     @Autowired
     UserMapper userMapper;
     @Autowired
     JavaMailSenderImpl mailSender;
+    @Autowired
+    FollowMapper followMapper;
 
     @Override
     public void insertUser(User user) throws Exception {
@@ -138,5 +143,33 @@ public class UserServiceImpl implements UserService {
         User user = getUserById(userId);
         user.setIsBan(true);
         userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public User toFollow(Long userId, Long followerId) throws Exception {
+        //doge_follow表增加一条记录
+        Follow follow = new Follow();
+        follow.setUserId(userId);
+        follow.setFollowerId(followerId);
+        followMapper.insertSelective(follow);
+
+        //关注用户，关注数+1
+        User user = getUserById(userId);
+        user.setFollowingNumber(user.getFollowingNumber() + 1);
+        userMapper.updateByPrimaryKeySelective(user);
+        //被关注用户，粉丝数+1
+        User followUser = getUserById(followerId);
+        followUser.setFollowersNumber(followUser.getFollowersNumber() + 1);
+        userMapper.updateByPrimaryKeySelective(followUser);
+
+        return followUser;
+    }
+
+    @Override
+    public List<Follow> isFollowed(Long userId, Long followerId) throws Exception {
+        FollowExample followExample = new FollowExample();
+        followExample.createCriteria().andUserIdEqualTo(userId).andFollowerIdEqualTo(followerId);
+        List<Follow> follows = followMapper.selectByExample(followExample);
+        return  follows;
     }
 }

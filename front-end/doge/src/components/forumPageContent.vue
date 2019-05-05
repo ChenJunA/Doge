@@ -7,13 +7,13 @@
                     <Col span="8">
                         <Row>
                             <Col span="8">
-                                <a @click="" style="color:gray">推荐</a>
+                                <a @click="getRecommendArticles()" style="color:gray">推荐</a>
                             </Col>
                             <Col span="8">
-                                <a @click="" style="color:gray">关注</a>
+                                <a @click="getFollowArticles()" style="color:gray">关注</a>
                             </Col>
                             <Col span="8">
-                                <a @click="" style="color:gray">热榜</a>
+                                <a @click="findHotArticles()" style="color:gray">热榜</a>
                             </Col>
                         </Row>
                     </Col>
@@ -104,6 +104,37 @@ export default {
             .then(resp => {
                 this.forumList = resp.data.data
                 console.log(this.forumList)
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
+        },
+        findHotArticles(){
+            this.axios.get("http://localhost:80/findHotArticles")
+            .then(resp => {
+                this.forumList = resp.data.data
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
+        },
+        getRecommendArticles(){
+            this.axios.get("http://localhost:80/getRecommendArticles")
+            .then(resp => {
+                this.forumList = resp.data.data
+            })
+            .catch(err => {
+                this.$Message.error("请求出错");
+            });
+        },
+        getFollowArticles(){
+            this.axios.get("http://localhost:80/getFollowArticles",{
+                params:{
+                    userId:this.$store.state.user.id
+                }
+            })
+            .then(resp => {
+                this.forumList = resp.data.data
             })
             .catch(err => {
                 this.$Message.error("请求出错");

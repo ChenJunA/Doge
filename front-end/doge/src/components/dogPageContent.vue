@@ -37,7 +37,7 @@
                         <Button style="width:100px" type="info" v-else @click="toCollect(dog.id)">收藏动物</Button>
                     </Col>
                     <Col span="8" style="text-align:center" v-if="this.dog && this.dog.foster === this.$store.state.user.id">
-                        <Button style="width:100px" type="info" @click="updateDoge()">修改信息</Button>
+                        <Button style="width:100px" type="info" @click="dogModal = true">修改信息</Button>
                         <Modal v-model="dogModal" title="修改动物信息" :loading="loading" @on-ok="updateDogeOK(dog.id)" :closable="false" :mask-closable="false">
                                 <Form ref="updateDogData" :model="updateDogData" :label-width="40" :rules="dogValidate" class="coverCss">
                                     <FormItem prop="dogName" label="姓名">
@@ -87,7 +87,8 @@
                             footer-hide
                             v-if="this.fosterUser"
                             width="400px">
-                            <div style="height:100px  ">
+                            <div style="height:100px  " @click="toOtherUserPage(dog.foster)">
+                                <a style="color:gray">
                                 <div style="float:left; width:120px">
                                     <Avatar shape="square" :src="this.fosterUser.avatar" style="width:100px; height:100px"/>
                                 </div>
@@ -98,6 +99,7 @@
                                     <Row>地址：{{fosterUser.address}}</Row>
                                     <Row>{{fosterUser.biography}}</Row>
                                 </div>
+                                </a>
                             </div>
                         </Modal>
                     </Col>
@@ -143,7 +145,7 @@
             </div>
             <Divider />
 
-            <div class="dogCommentDiv" style="margin-bottom:100px; height:200px">
+            <div class="dogCommentDiv" style="margin-bottom:100px; height:100px">
                 <div style="width:95%; margin:auto">
                     <Form ref="dogComment" :model="dogComment" class="coverCss">
                         <FormItem prop="content">
@@ -170,7 +172,7 @@
                 isCollect: undefined,
                 modal: false,
                 fosterUser:undefined,
-                dogModal:undefined,
+                dogModal:false,
                 updateDogData:{
                     dogName:'',
                     age:'',
@@ -371,6 +373,10 @@
                 .catch(err => {
                     this.$Message.error("请求出错");
                 });
+            },
+            toOtherUserPage(foster){
+                this.$store.dispatch('getOtherUserId', foster);
+                this.$router.push('/otherUserPage')
             }
         }
     }

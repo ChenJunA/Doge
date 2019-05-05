@@ -3,6 +3,7 @@ package com.doge.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description:
@@ -29,7 +30,7 @@ public class ArticleDTO {
 
     private Long viewNum;
 
-    private String picture;
+    private List<String> pictures;
 
     private Boolean delete;
 
@@ -69,8 +70,8 @@ public class ArticleDTO {
         return viewNum;
     }
 
-    public String getPicture() {
-        return picture;
+    public List<String> getPictures() {
+        return pictures;
     }
 
     public Boolean getDelete() {
@@ -113,8 +114,8 @@ public class ArticleDTO {
         this.viewNum = viewNum;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
     }
 
     public void setDelete(Boolean delete) {

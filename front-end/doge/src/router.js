@@ -9,6 +9,7 @@ import dogPage from './views/dogPage'
 import forumPage from './views/forumPage'
 import forumInfoPage from './views/forumInfoPage'
 import materialPage from './views/materialPage'
+import otherUserPage from './views/otherUserPage'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/material',
       name: 'material',
       component: materialPage
+    },
+    {
+      path: '/otherUserPage',
+      name: 'otherUserPage',
+      component: otherUserPage
     }
   ]
 })

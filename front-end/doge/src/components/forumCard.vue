@@ -1,8 +1,9 @@
 <template>
-<div style="margin-bottom:24px">
+<div>
+    <a style="color:gray">
     <div class="forum_card"  @click="forum()">
         <div class="forum_card_left">
-            <img :src="item.picture" style="width:120px; height:120px; margin:auto">
+            <img :src="item.pictures[0]" style="width:120px; height:120px; margin:auto">
         </div>
 
         <div class="forum_card_right">
@@ -16,8 +17,23 @@
                 </div>
             </div>
         </div>
-        <Divider />
+
+        <div>
+            <div style="float:left; margin-top:20px">
+                {{item.username}}
+                <Divider type="vertical" />
+                {{item.gmtCreate}}
+            </div>
+            <div style="float:right; margin-top:20px">
+                <Icon type="md-eye" />&nbsp;&nbsp;{{item.viewNum}}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Icon type="ios-text" />&nbsp;&nbsp;{{item.replyNum}}
+            </div>
+                
+        </div>
     </div>
+    <Divider />
+    </a>
 </div>
 </template>
 
@@ -28,8 +44,19 @@ export default {
     props:["item"],
     methods:{
             forum(){
-                this.$router.push('/forumInfoPage')
+                this.axios.put("http://localhost:80/addViewNum", {
+                    articleId: this.item.id
+                })
+                .then(resp => {
+                   this.$store.dispatch('getArticleById', this.item.id);
+                    this.$router.push('/forumInfoPage')
+                })
+                .catch(err => {
+                    this.$Message.error("请求出错");
+                });
             }
+    },
+    mounted(){
     }
 }
 </script>
@@ -49,12 +76,5 @@ export default {
     width: 70%;
     float: right;
     margin-top: 25px;
-}
-.forum_card .ivu-divider-horizontal{
-    height: 1px;
-    width: 100%;
-    min-width: 100%;
-    margin: 24px 0;
-    clear: both;
 }
 </style>

@@ -1,14 +1,17 @@
 package com.doge.controller;
 
+import com.doge.entity.Follow;
 import com.doge.entity.User;
 import com.doge.enums.StatusCode;
 import com.doge.util.RespUtil;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -143,5 +146,39 @@ public class UserController extends BaseController {
     public RespUtil<User> updateUser(@RequestBody User user) throws Exception {
         User respUser = userService.updateUser(user);
         return RespUtil.success(respUser);
+    }
+
+    /**
+     * 关注
+     *
+     * @param map 参数
+     * @return 状态信息
+     */
+    @ApiOperation("关注")
+    @ApiImplicitParam(name = "map", value = "参数", required = true, dataType = "Map")
+    @PostMapping("/toFollow")
+    public RespUtil<User> toFollow(@RequestBody Map<String, String> map) throws Exception {
+        Long userId = Long.valueOf(map.get("userId"));
+        Long followerId = Long.valueOf(map.get("followerId"));
+        User user = userService.toFollow(userId, followerId);
+        return RespUtil.success(user);
+    }
+
+    /**
+     * 是否关注
+     *
+     * @param userId 关注者ID
+     * @param followerId 被关注者ID
+     * @return 状态信息
+     */
+    @ApiOperation("是否关注")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "关注者ID", required = true, dataType = "Long"),
+            @ApiImplicitParam(name = "followerId", value = "被关注者ID", required = true, dataType = "Long")
+    })
+    @GetMapping("/isFollowed")
+    public RespUtil<List<Follow>> isFollowed(Long userId, Long followerId) throws Exception {
+        List<Follow> follows = userService.isFollowed(userId, followerId);
+        return RespUtil.success(follows);
     }
 }

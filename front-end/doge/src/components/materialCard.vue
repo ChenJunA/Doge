@@ -1,5 +1,6 @@
 <template>
-<div style="margin-bottom:24px">
+<div>
+    <a style="color:gray">
     <div class="material_card"  @click="material()">
         <div class="material_card_left">
             <img src="@/assets/avatar.png" style="width:120px; height:120px; margin:auto">
@@ -16,8 +17,9 @@
                 </div>
             </div>
         </div>
-        <Divider />
     </div>
+    <Divider />
+    </a>
 </div>
 </template>
 

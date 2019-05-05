@@ -1,16 +1,17 @@
 package com.doge.controller;
 
 import com.doge.dto.ArticleDTO;
+import com.doge.dto.DogDTO;
+import com.doge.dto.ReplyDTO;
 import com.doge.entity.Article;
+import com.doge.entity.Reply;
 import com.doge.util.RespUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 论坛帖子Controller
@@ -38,7 +39,7 @@ public class ArticleController extends BaseController{
      *
      * @return 状态信息
      */
-    @ApiOperation("发表文章")
+    @ApiOperation("获取文章列表")
     @GetMapping("/listAllArticle")
     public RespUtil<List<ArticleDTO>> listAllArticle() throws Exception {
         List<ArticleDTO> articles = articleService.listAllArticle();
@@ -55,5 +56,110 @@ public class ArticleController extends BaseController{
     public RespUtil<Long> latestArticleId() throws Exception {
         Long articleId = articleService.latestArticleId();
         return RespUtil.success(articleId);
+    }
+
+    /**
+     * 查询文章详细信息
+     *
+     * @param articleId 文章ID
+     * @return 状态信息
+     */
+    @ApiOperation("查询文章详细信息")
+    @ApiImplicitParam(name = "articleId", value = "文章ID", required = true, dataType = "Long")
+    @GetMapping("/getArticleById/{articleId}")
+    public RespUtil<ArticleDTO> getArticleById(@PathVariable Long articleId) throws Exception{
+        ArticleDTO articleDTO = articleService.getArticleById(articleId);
+        return RespUtil.success(articleDTO);
+    }
+
+    /**
+     * 发表评论
+     *
+     * @param reply 评论内容
+     * @return 状态信息
+     */
+    @ApiOperation("发表评论")
+    @ApiImplicitParam(name = "reply", value = "评论内容", required = true, dataType = "Reply")
+    @PostMapping("/insertReply")
+    public RespUtil<List<ReplyDTO>> insertReply(@RequestBody Reply reply) throws Exception{
+        List<ReplyDTO> replyDTOS = articleService.insertReply(reply);
+        return RespUtil.success(replyDTOS);
+    }
+
+    /**
+     * 查找所有评论
+     *
+     * @param articleId 文章ID
+     * @return 状态信息
+     */
+    @ApiOperation("查找所有评论")
+    @ApiImplicitParam(name = "articleId", value = "文章ID", required = true, dataType = "Long")
+    @GetMapping("/listAllReply")
+    public RespUtil<List<ReplyDTO>> listAllReply(Long articleId) throws Exception{
+        List<ReplyDTO> replyDTOS = articleService.listAllReply(articleId);
+        return RespUtil.success(replyDTOS);
+    }
+
+    /**
+     * 访问次数+1
+     *
+     * @param map 参数
+     * @return 状态信息
+     */
+    @ApiOperation("访问次数")
+    @ApiImplicitParam(name = "map", value = "参数", required = true, dataType = "Map")
+    @PutMapping("/addViewNum")
+    public RespUtil<ReplyDTO> addViewNum(@RequestBody Map<String,String> map) throws Exception{
+        Long articleId = Long.valueOf(map.get("articleId"));
+        articleService.addViewNum(articleId);
+        return RespUtil.success();
+    }
+
+    /**
+     * 热榜
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("热榜")
+    @GetMapping("/findHotArticles")
+    public RespUtil<List<ArticleDTO>> findHotArticles() throws Exception{
+        List<ArticleDTO> articles = articleService.findHotArticles();
+        return RespUtil.success(articles);
+    }
+
+    /**
+     * 推荐
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("推荐")
+    @GetMapping("/getRecommendArticles")
+    public RespUtil<List<ArticleDTO>> getRecommendArticles() throws Exception{
+        List<ArticleDTO> articles = articleService.getRecommendArticles();
+        return RespUtil.success(articles);
+    }
+
+    /**
+     * 关注
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("关注")
+    @GetMapping("/getFollowArticles")
+    public RespUtil<List<ArticleDTO>> getFollowArticles(Long userId) throws Exception{
+        List<ArticleDTO> articles = articleService.getFollowArticles(userId);
+        return RespUtil.success(articles);
+    }
+
+    /**
+     * 根据用户ID获取文章列表
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("根据用户ID获取文章列表")
+    @GetMapping("/listArticleByUserId")
+    public RespUtil<List<ArticleDTO>> listArticleByUserId(Long userId) throws Exception {
+        List<ArticleDTO> articles = articleService.listArticleByUserId(userId);
+        return RespUtil.success(articles);
     }
 }

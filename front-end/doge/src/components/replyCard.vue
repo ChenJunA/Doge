@@ -23,7 +23,12 @@
                     <Row style="text-align:center; margin:auto">
                         <Col span="17">&nbsp;</Col>
                         <Col span="2" style="line-height:36px; font-size:12px">
-                            <Icon type="ios-text" size="16"/>&nbsp;&nbsp;{{item.replyNum}}条评论
+                            <!-- <Collapse v-model="value1" simple>
+                                <Panel hide-arrow> -->
+                                    <Icon type="ios-text" size="16"/>&nbsp;&nbsp;{{item.replyNum}}条评论
+                                    <!-- <span slot="content">史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。</span> -->
+                                <!-- </Panel> -->
+                            </Collapse>
                         </Col>
                         <Col span="2" style="line-height:36px; font-size:12px">
                             <Icon type="ios-share-alt" size="16" />&nbsp;&nbsp;分享
@@ -54,6 +59,12 @@ export default {
         }
     },
     mounted(){
+    },
+    data(){
+        return{
+            value1:''
+        }
+
     }
 }
 </script>

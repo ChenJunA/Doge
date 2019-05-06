@@ -166,7 +166,12 @@ public class ArticleServiceImpl implements ArticleService {
             replyDTO.setUsername(user.getUsername());
             replyDTO.setBiography(user.getBiography());
             replyDTO.setAvatar(user.getAvatar());
-            replyDTO.setReplyNum(33);
+
+            //查找评论数量
+            ReplyExample replyNumExample = new ReplyExample();
+            replyNumExample.createCriteria().andParentIdEqualTo(reply.getId());
+            List<Reply> numReplies = replyMapper.selectByExample(replyNumExample);
+            replyDTO.setReplyNum(numReplies.size());
 
             replyDTOS.add(replyDTO);
         }

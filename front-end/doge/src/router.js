@@ -10,6 +10,7 @@ import forumPage from './views/forumPage'
 import forumInfoPage from './views/forumInfoPage'
 import materialPage from './views/materialPage'
 import otherUserPage from './views/otherUserPage'
+import background from './views/background'
 
 Vue.use(Router)
 
@@ -83,6 +84,11 @@ export default new Router({
       path: '/otherUserPage',
       name: 'otherUserPage',
       component: otherUserPage
+    },
+    {
+      path: '/background',
+      name: 'background',
+      component: background
     }
   ]
 })

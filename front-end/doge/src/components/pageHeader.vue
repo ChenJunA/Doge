@@ -86,7 +86,7 @@
                                     </div>
                                     <Divider style="margin-top:10px"/>
                                     <div class="poptip_icon">
-                                        <Icon type="ios-settings" />&nbsp;<a style="color:gray">设置</a>
+                                        <Icon type="ios-settings" />&nbsp;<a @click="toBackground()" style="color:gray">设置</a>
                                     </div>
                                     <Divider style="margin-top:10px"/>
                                     <div class="poptip_icon">
@@ -168,6 +168,9 @@
             },
             toUserPage(){
                 this.$router.push('/userPage');
+            },
+            toBackground(){
+                this.$router.push('/background');
             },
             OK (name) {
                 this.$refs[name].validate((valid) => {

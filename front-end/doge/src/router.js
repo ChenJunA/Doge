@@ -11,6 +11,7 @@ import forumInfoPage from './views/forumInfoPage'
 import materialPage from './views/materialPage'
 import otherUserPage from './views/otherUserPage'
 import background from './views/background'
+import userInfo from './components/userInfo'
 
 Vue.use(Router)
 
@@ -89,6 +90,14 @@ export default new Router({
       path: '/background',
       name: 'background',
       component: background
+    },
+    {
+      path: '/userInfo',
+      meta: {
+        pagename: '哈哈哈哈'
+      },
+      name: 'userInfo',
+      component: userInfo
     }
   ]
 })

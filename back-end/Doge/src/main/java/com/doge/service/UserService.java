@@ -74,7 +74,7 @@ public interface UserService {
      *
      * @param userId
      */
-    void ban(Long userId) throws Exception;
+    List<User> ban(Long userId) throws Exception;
 
     /**
      * 关注
@@ -91,4 +91,9 @@ public interface UserService {
      * @param followerId
      */
     List<Follow> isFollowed(Long userId, Long followerId) throws Exception;
+
+    /**
+     * 查询所有用户
+     */
+    List<User> listAllUser() throws Exception;
 }

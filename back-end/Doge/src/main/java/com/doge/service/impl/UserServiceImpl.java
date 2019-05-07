@@ -139,10 +139,12 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public void ban(Long userId) throws Exception {
+    public List<User> ban(Long userId) throws Exception {
         User user = getUserById(userId);
         user.setIsBan(true);
         userMapper.updateByPrimaryKeySelective(user);
+        List<User> users = listAllUser();
+        return  users;
     }
 
     @Override
@@ -171,5 +173,13 @@ public class UserServiceImpl  implements UserService {
         followExample.createCriteria().andUserIdEqualTo(userId).andFollowerIdEqualTo(followerId);
         List<Follow> follows = followMapper.selectByExample(followExample);
         return  follows;
+    }
+
+    @Override
+    public List<User> listAllUser() throws Exception {
+        UserExample userExample = new UserExample();
+        userExample.setOrderByClause("id desc");
+        List<User> users = userMapper.selectByExample(userExample);
+        return users;
     }
 }

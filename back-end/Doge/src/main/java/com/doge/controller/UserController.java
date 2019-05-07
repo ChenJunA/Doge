@@ -128,10 +128,10 @@ public class UserController extends BaseController {
      */
     @ApiOperation("封禁用户")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
-    @PutMapping("/ban")
-    public RespUtil<User> ban(@PathVariable Long userId) throws Exception {
-        userService.ban(userId);
-        return RespUtil.success();
+    @PutMapping("/ban/{userId}")
+    public RespUtil<List<User>> ban(@PathVariable Long userId) throws Exception {
+        List<User> users = userService.ban(userId);
+        return RespUtil.success(users);
     }
 
     /**
@@ -180,5 +180,17 @@ public class UserController extends BaseController {
     public RespUtil<List<Follow>> isFollowed(Long userId, Long followerId) throws Exception {
         List<Follow> follows = userService.isFollowed(userId, followerId);
         return RespUtil.success(follows);
+    }
+
+    /**
+     * 查询所有用户
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("查询所有用户")
+    @GetMapping("/listAllUser")
+    public RespUtil<List<User>> listAllUser() throws Exception {
+        List<User> users = userService.listAllUser();
+        return RespUtil.success(users);
     }
 }

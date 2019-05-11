@@ -25,4 +25,20 @@ public interface DogCommentService {
      * @param dogId
      */
     List<DogCommentDTO> listDogComment(Long dogId) throws Exception;
+
+    /**
+     * 获取所有评论列表
+     */
+    List<DogCommentDTO> listAllDogComment() throws Exception;
+
+    /**
+     * 删除动物评论
+     */
+    void deleteDogComment(Long dogCommentId) throws Exception;
+
+    /**
+     * 恢复动物评论
+     */
+    void reCoverDogComment(Long dogCommentId) throws Exception;
+
 }

@@ -85,10 +85,10 @@
                                         <Icon type="ios-contact" />&nbsp;<a @click="toUserPage()" style="color:gray">主页</a>
                                     </div>
                                     <Divider style="margin-top:10px"/>
-                                    <div class="poptip_icon">
+                                    <div class="poptip_icon" v-if="user.id === 29">
                                         <Icon type="ios-settings" />&nbsp;<a @click="toBackground()" style="color:gray">设置</a>
                                     </div>
-                                    <Divider style="margin-top:10px"/>
+                                    <Divider style="margin-top:10px" v-if="user.id === 29"/>
                                     <div class="poptip_icon">
                                        <Icon type="ios-power" />&nbsp;<a @click="quit()" style="color:gray">退出</a>
                                     </div>

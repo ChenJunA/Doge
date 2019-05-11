@@ -25,6 +25,8 @@ public interface ArticleService {
 
     List<ReplyDTO> listAllReply(Long articleId) throws Exception;
 
+    List<ReplyDTO> listAllArticleReply() throws Exception;
+
     void addViewNum(Long articleId) throws Exception;
 
     List<ArticleDTO> findHotArticles() throws Exception;
@@ -34,4 +36,12 @@ public interface ArticleService {
     List<ArticleDTO> getFollowArticles(Long userId) throws Exception;
 
     List<ArticleDTO> listArticleByUserId(Long userId) throws Exception;
+
+    void reCoverArticleReply(Long replyId) throws Exception;
+
+    void deleteArticleReply(Long replyId) throws Exception;
+
+    void deleteArticle(Long articleId) throws Exception;
+
+    void reCoverArticle(Long articleId) throws Exception;
 }

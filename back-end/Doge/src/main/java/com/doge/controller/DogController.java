@@ -57,9 +57,23 @@ public class DogController extends BaseController {
     @ApiOperation("删除动物信息")
     @ApiImplicitParam(name = "dogId", value = "动物ID", required = true, dataType = "Long")
     @DeleteMapping("/deleteDog/{dogId}")
-    public RespUtil<Dog> deleteDog(@PathVariable Long dogId) throws Exception{
-        dogService.deleteDog(dogId);
-        return RespUtil.success();
+    public RespUtil<List<Dog>> deleteDog(@PathVariable Long dogId) throws Exception{
+        List<Dog> dogs = dogService.deleteDog(dogId);
+        return RespUtil.success(dogs);
+    }
+
+    /**
+     * 恢复动物信息
+     *
+     * @param dogId 动物ID
+     * @return 状态信息
+     */
+    @ApiOperation("恢复动物信息")
+    @ApiImplicitParam(name = "dogId", value = "动物ID", required = true, dataType = "Long")
+    @DeleteMapping("/reCover/{dogId}")
+    public RespUtil<List<Dog>> reCover(@PathVariable Long dogId) throws Exception{
+        List<Dog> dogs = dogService.reCover(dogId);
+        return RespUtil.success(dogs);
     }
 
     /**

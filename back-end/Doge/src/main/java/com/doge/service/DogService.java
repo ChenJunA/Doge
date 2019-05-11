@@ -33,7 +33,15 @@ public interface DogService {
      *
      * @param dogId
      */
-    void deleteDog(Long dogId) throws Exception;
+    List<Dog> deleteDog(Long dogId) throws Exception;
+
+    /**
+     * 恢复动物信息
+     *
+     * @param dogId
+     */
+    List<Dog> reCover(Long dogId) throws Exception;
+
 
     /**
      * 根据ID获取动物信息

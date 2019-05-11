@@ -77,6 +77,13 @@ public interface UserService {
     List<User> ban(Long userId) throws Exception;
 
     /**
+     * 解封
+     *
+     * @param userId
+     */
+    List<User> unBan(Long userId) throws Exception;
+
+    /**
      * 关注
      *
      * @param userId

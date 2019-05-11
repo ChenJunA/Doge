@@ -87,18 +87,31 @@ public class ArticleController extends BaseController{
     }
 
     /**
-     * 查找所有评论
+     * 查找文章所有评论
      *
      * @param articleId 文章ID
      * @return 状态信息
      */
-    @ApiOperation("查找所有评论")
+    @ApiOperation("查找文章所有评论")
     @ApiImplicitParam(name = "articleId", value = "文章ID", required = true, dataType = "Long")
     @GetMapping("/listAllReply")
     public RespUtil<List<ReplyDTO>> listAllReply(Long articleId) throws Exception{
         List<ReplyDTO> replyDTOS = articleService.listAllReply(articleId);
         return RespUtil.success(replyDTOS);
     }
+
+    /**
+     * 查找所有评论
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("查找所有评论")
+    @GetMapping("/listAllArticleReply")
+    public RespUtil<List<ReplyDTO>> listAllArticleReply() throws Exception{
+        List<ReplyDTO> replyDTOS = articleService.listAllArticleReply();
+        return RespUtil.success(replyDTOS);
+    }
+
 
     /**
      * 访问次数+1
@@ -161,5 +174,53 @@ public class ArticleController extends BaseController{
     public RespUtil<List<ArticleDTO>> listArticleByUserId(Long userId) throws Exception {
         List<ArticleDTO> articles = articleService.listArticleByUserId(userId);
         return RespUtil.success(articles);
+    }
+
+    /**
+     * 删除评论
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("删除评论")
+    @DeleteMapping("/deleteArticleReply/{replyId}")
+    public RespUtil<Reply> deleteArticleReply(@PathVariable Long replyId) throws Exception {
+        articleService.deleteArticleReply(replyId);
+        return RespUtil.success();
+    }
+
+    /**
+     * 恢复评论
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("恢复评论")
+    @DeleteMapping("/reCoverArticleReply/{replyId}")
+    public RespUtil<Reply> reCoverArticleReply(@PathVariable Long replyId) throws Exception {
+        articleService.reCoverArticleReply(replyId);
+        return RespUtil.success();
+    }
+
+    /**
+     * 删除文章
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("删除文章")
+    @DeleteMapping("/deleteArticle/{articleId}")
+    public RespUtil<Reply> deleteArticle(@PathVariable Long articleId) throws Exception {
+        articleService.deleteArticle(articleId);
+        return RespUtil.success();
+    }
+
+    /**
+     * 恢复文章
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("恢复文章")
+    @DeleteMapping("/reCoverArticle/{articleId}")
+    public RespUtil<Reply> reCoverArticle(@PathVariable Long articleId) throws Exception {
+        articleService.reCoverArticle(articleId);
+        return RespUtil.success();
     }
 }

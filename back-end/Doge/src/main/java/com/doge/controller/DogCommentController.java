@@ -5,10 +5,7 @@ import com.doge.entity.DogComment;
 import com.doge.util.RespUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,16 +34,52 @@ public class DogCommentController extends BaseController{
 
 
     /**
-     * 获取评论列表
+     * 获取该动物评论列表
      *
      * @param dogId 动物ID
      * @return 状态信息
      */
-    @ApiOperation("获取评论列表")
+    @ApiOperation("获取该动物评论列表")
     @ApiImplicitParam(name = "dogId", value = "动物ID", required = true, dataType = "Long")
     @GetMapping("/listDogComment")
     public RespUtil<List<DogCommentDTO>> listDogComment(Long dogId) throws Exception{
         List<DogCommentDTO> dogComments = dogCommentService.listDogComment(dogId);
         return RespUtil.success(dogComments);
+    }
+
+    /**
+     * 获取所有评论列表
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("获取所有评论列表")
+    @GetMapping("/listAllDogComment")
+    public RespUtil<List<DogCommentDTO>> listAllDogComment() throws Exception{
+        List<DogCommentDTO> dogComments = dogCommentService.listAllDogComment();
+        return RespUtil.success(dogComments);
+    }
+
+    /**
+     * 删除动物评论
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("删除动物评论")
+    @DeleteMapping("/deleteDogComment/{dogCommentId}")
+    public RespUtil<DogComment> deleteDogComment(@PathVariable Long dogCommentId) throws Exception{
+        dogCommentService.deleteDogComment(dogCommentId);
+        return RespUtil.success();
+    }
+
+    /**
+     * 恢复动物评论
+     *
+     * @return 状态信息
+     */
+    @ApiOperation("恢复动物评论")
+    @DeleteMapping("/reCoverDogComment/{dogCommentId}")
+    public RespUtil<DogComment> reCoverDogComment(@PathVariable Long dogCommentId) throws Exception{
+        dogCommentService.reCoverDogComment(dogCommentId);
+        return RespUtil.success();
     }
 }

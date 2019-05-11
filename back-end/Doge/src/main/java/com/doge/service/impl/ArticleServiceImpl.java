@@ -148,35 +148,16 @@ public class ArticleServiceImpl implements ArticleService {
         replyExample.createCriteria().andArticleIdEqualTo(articleId);
         List<Reply> replies = replyMapper.selectByExample(replyExample);
 
-        List<ReplyDTO> replyDTOS = new ArrayList<>();
-        for (Reply reply : replies) {
-            ReplyDTO replyDTO = new ReplyDTO();
-            replyDTO.setId(reply.getId());
-            replyDTO.setGmtCreate(reply.getGmtCreate());
-            replyDTO.setGmtModified(reply.getGmtModified());
-            replyDTO.setArticleId(reply.getArticleId());
-            replyDTO.setParentId(reply.getParentId());
-            replyDTO.setReplyId(reply.getReplyId());
-            replyDTO.setContent(reply.getContent());
-            replyDTO.setDelete(reply.getIsDelete());
-            replyDTO.setUserId(reply.getUserId());
+        return toReplyDTO(replies);
+    }
 
-            //查找用户
-            User user = userService.getUserById(reply.getUserId());
-            replyDTO.setUsername(user.getUsername());
-            replyDTO.setBiography(user.getBiography());
-            replyDTO.setAvatar(user.getAvatar());
+    @Override
+    public List<ReplyDTO> listAllArticleReply() throws Exception {
+        ReplyExample replyExample = new ReplyExample();
+        replyExample.setOrderByClause("id desc");
+        List<Reply> replies = replyMapper.selectByExample(replyExample);
+        return toReplyDTO(replies);
 
-            //查找评论数量
-            ReplyExample replyNumExample = new ReplyExample();
-            replyNumExample.createCriteria().andParentIdEqualTo(reply.getId());
-            List<Reply> numReplies = replyMapper.selectByExample(replyNumExample);
-            replyDTO.setReplyNum(numReplies.size());
-
-            replyDTOS.add(replyDTO);
-        }
-
-        return replyDTOS;
     }
 
     @Override
@@ -234,5 +215,65 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return respArticleDTOS;
 
+    }
+
+    @Override
+    public void reCoverArticleReply(Long replyId) throws Exception {
+        Reply reply = replyMapper.selectByPrimaryKey(replyId);
+        reply.setIsDelete(false);
+        replyMapper.updateByPrimaryKeySelective(reply);
+    }
+
+    @Override
+    public void deleteArticleReply(Long replyId) throws Exception {
+        Reply reply = replyMapper.selectByPrimaryKey(replyId);
+        reply.setIsDelete(true);
+        replyMapper.updateByPrimaryKeySelective(reply);
+    }
+
+    @Override
+    public void deleteArticle(Long articleId) throws Exception {
+        Article article = articleMapper.selectByPrimaryKey(articleId);
+        article.setIsDelete(true);
+        articleMapper.updateByPrimaryKeySelective(article);
+
+    }
+
+    @Override
+    public void reCoverArticle(Long articleId) throws Exception {
+        Article article = articleMapper.selectByPrimaryKey(articleId);
+        article.setIsDelete(false);
+        articleMapper.updateByPrimaryKeySelective(article);
+    }
+
+    private List<ReplyDTO> toReplyDTO(List<Reply> replies) throws Exception{
+        List<ReplyDTO> replyDTOS = new ArrayList<>();
+        for (Reply reply : replies) {
+            ReplyDTO replyDTO = new ReplyDTO();
+            replyDTO.setId(reply.getId());
+            replyDTO.setGmtCreate(reply.getGmtCreate());
+            replyDTO.setGmtModified(reply.getGmtModified());
+            replyDTO.setArticleId(reply.getArticleId());
+            replyDTO.setParentId(reply.getParentId());
+            replyDTO.setReplyId(reply.getReplyId());
+            replyDTO.setContent(reply.getContent());
+            replyDTO.setDelete(reply.getIsDelete());
+            replyDTO.setUserId(reply.getUserId());
+
+            //查找用户
+            User user = userService.getUserById(reply.getUserId());
+            replyDTO.setUsername(user.getUsername());
+            replyDTO.setBiography(user.getBiography());
+            replyDTO.setAvatar(user.getAvatar());
+
+            //查找评论数量
+            ReplyExample replyNumExample = new ReplyExample();
+            replyNumExample.createCriteria().andParentIdEqualTo(reply.getId());
+            List<Reply> numReplies = replyMapper.selectByExample(replyNumExample);
+            replyDTO.setReplyNum(numReplies.size());
+
+            replyDTOS.add(replyDTO);
+        }
+        return replyDTOS;
     }
 }

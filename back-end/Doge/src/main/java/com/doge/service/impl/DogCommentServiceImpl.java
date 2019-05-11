@@ -35,6 +35,32 @@ public class DogCommentServiceImpl implements DogCommentService {
         DogCommentExample dogCommentExample = new DogCommentExample();
         dogCommentExample.createCriteria().andDogIdEqualTo(dogId);
         List<DogComment> dogComments = dogCommentMapper.selectByExample(dogCommentExample);
+        return toDogCommentDTO(dogComments);
+    }
+
+    @Override
+    public List<DogCommentDTO> listAllDogComment() throws Exception {
+        DogCommentExample dogCommentExample = new DogCommentExample();
+        dogCommentExample.setOrderByClause("id desc");
+        List<DogComment> dogComments = dogCommentMapper.selectByExample(dogCommentExample);
+        return toDogCommentDTO(dogComments);
+    }
+
+    @Override
+    public void deleteDogComment(Long dogCommentId) throws Exception {
+        DogComment dogComment = dogCommentMapper.selectByPrimaryKey(dogCommentId);
+        dogComment.setIsDelete(true);
+        dogCommentMapper.updateByPrimaryKeySelective(dogComment);
+    }
+
+    @Override
+    public void reCoverDogComment(Long dogCommentId) throws Exception {
+        DogComment dogComment = dogCommentMapper.selectByPrimaryKey(dogCommentId);
+        dogComment.setIsDelete(false);
+        dogCommentMapper.updateByPrimaryKeySelective(dogComment);
+    }
+
+    private List<DogCommentDTO> toDogCommentDTO(List<DogComment> dogComments) throws Exception{
         List<DogCommentDTO> dogCommentDTOList = new ArrayList<>();
         for(DogComment dogComment : dogComments){
             DogCommentDTO dogCommentDTO = new DogCommentDTO();

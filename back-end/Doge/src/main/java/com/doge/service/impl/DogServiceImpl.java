@@ -42,8 +42,19 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public void deleteDog(Long dogId) throws Exception {
-        dogMapper.deleteByPrimaryKey(dogId);
+    public List<Dog> deleteDog(Long dogId) throws Exception {
+        Dog dog = dogMapper.selectByPrimaryKey(dogId);
+        dog.setIsDelete(true);
+        dogMapper.updateByPrimaryKeySelective(dog);
+        return listAll();
+    }
+
+    @Override
+    public List<Dog> reCover(Long dogId) throws Exception {
+        Dog dog = dogMapper.selectByPrimaryKey(dogId);
+        dog.setIsDelete(false);
+        dogMapper.updateByPrimaryKeySelective(dog);
+        return listAll();
     }
 
     @Override

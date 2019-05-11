@@ -38,7 +38,7 @@
                     </Col>
                     <Col span="8" style="text-align:center" v-if="this.dog && this.dog.foster === this.$store.state.user.id">
                         <Button style="width:100px" type="info" @click="dogModal = true">修改信息</Button>
-                        <Modal v-model="dogModal" title="修改动物信息" :loading="loading" @on-ok="updateDogeOK(dog.id)" :closable="false" :mask-closable="false">
+                        <Modal v-model="dogModal" title="修改动物信息" :loading="loading" @on-ok="updateDogeOK(updateDogData.id)" :closable="false" :mask-closable="false">
                                 <Form ref="updateDogData" :model="updateDogData" :label-width="40" :rules="dogValidate" class="coverCss">
                                     <FormItem prop="dogName" label="姓名">
                                         <Input type="text" v-model="updateDogData.dogName" placeholder="动物名" >
@@ -222,7 +222,19 @@
             this.axios.get("http://localhost:80/getDogById/" + this.$store.state.dogId)
             .then(resp => {
                 this.dog = resp.data.data
+                this.updateDogData = resp.data.data
+                if(this.dog.type === '流浪狗'){
+                    this.updateDogData.type = "1"
+                }else {
+                    this.updateDogData.type = "2"
+                }
+                if(this.dog.vaccine === '未注射'){
+                    this.updateDogData.vaccine = "1"
+                }else{
+                    this.updateDogData.vaccine = "0"
+                }
                 this.pictures = resp.data.data.pictures
+                console.log(this.updateDogData)
             })
             .catch(err => {
                 this.$Message.error("请求出错");
@@ -258,7 +270,6 @@
             .catch(err => {
                 this.$Message.error("请求出错");
             });
-
         },
         methods: {
             toAdopt(dogId,foster){
@@ -341,10 +352,31 @@
                 console.log(this.updateDoge);
             },
             updateDogeOK(id){
-                this.updateDogData.id = id;
-                this.axios.put("http://localhost:80/updateDog". this.updateDogData)
+                setTimeout(() => {
+                    this.dogModal = false;
+                }, 500);
+                this.axios.put("http://localhost:80/updateDog", this.updateDogData)
                 .then(resp => {
-                    this.dog = resp.data.data
+                    this.axios.get("http://localhost:80/getDogById/" + this.$store.state.dogId)
+                    .then(resp => {
+                        this.dog = resp.data.data
+                        this.updateDogData = resp.data.data
+                        if(this.dog.type === '流浪狗'){
+                            this.updateDogData.type = "1"
+                        }else {
+                            this.updateDogData.type = "2"
+                        }
+                        if(this.dog.vaccine === '未注射'){
+                            this.updateDogData.vaccine = "1"
+                        }else{
+                            this.updateDogData.vaccine = "0"
+                        }
+                        this.pictures = resp.data.data.pictures
+                        console.log(this.updateDogData)
+                    })
+                    .catch(err => {
+                        this.$Message.error("请求出错");
+                    });
                 })
                 .catch(err => {
                     this.$Message.error("请求出错");

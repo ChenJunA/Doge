@@ -135,6 +135,21 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 解封
+     *
+     * @param userId 用户ID
+     * @return 状态信息
+     */
+    @ApiOperation("解封")
+    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long")
+    @PutMapping("/unBan/{userId}")
+    public RespUtil<List<User>> unBan(@PathVariable Long userId) throws Exception {
+        List<User> users = userService.unBan(userId);
+        return RespUtil.success(users);
+    }
+
+
+    /**
      * 更新用户信息
      *
      * @param user 用户信息

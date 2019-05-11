@@ -148,6 +148,15 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
+    public List<User> unBan(Long userId) throws Exception {
+        User user = getUserById(userId);
+        user.setIsBan(false);
+        userMapper.updateByPrimaryKeySelective(user);
+        List<User> users = listAllUser();
+        return  users;
+    }
+
+    @Override
     public User toFollow(Long userId, Long followerId) throws Exception {
         //doge_follow表增加一条记录
         Follow follow = new Follow();

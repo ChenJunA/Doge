@@ -12,6 +12,11 @@ import materialPage from './views/materialPage'
 import otherUserPage from './views/otherUserPage'
 import background from './views/background'
 import userInfo from './components/userInfo'
+import dogeInfo from './components/dogeInfo'
+import logInfo from './components/logInfo'
+import dogeCommentInfo from './components/dogeCommentInfo'
+import articleInfo from './components/articleInfo'
+import articleCommentInfo from './components/articleCommentInfo'
 
 Vue.use(Router)
 
@@ -93,11 +98,33 @@ export default new Router({
     },
     {
       path: '/userInfo',
-      meta: {
-        pagename: '哈哈哈哈'
-      },
       name: 'userInfo',
       component: userInfo
+    },
+    {
+      path: '/dogeInfo',
+      name: 'dogeInfo',
+      component: dogeInfo
+    },
+    {
+      path: '/logInfo',
+      name: 'logInfo',
+      component: logInfo
+    },
+    {
+      path: '/dogeCommentInfo',
+      name: 'dogeCommentInfo',
+      component: dogeCommentInfo
+    },
+    {
+      path: '/articleInfo',
+      name: 'articleInfo',
+      component: articleInfo
+    },
+    {
+      path: '/articleCommentInfo',
+      name: 'articleCommentInfo',
+      component: articleCommentInfo
     }
   ]
 })

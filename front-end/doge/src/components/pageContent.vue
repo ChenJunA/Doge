@@ -23,7 +23,7 @@
                 </div>
                 <Divider style="margin-top:15px"/>
 
-                <dogeCard  v-bind:item="doge" v-for="doge in dogeList"></dogeCard>
+                <dogeCard  v-bind:item="doge" v-for="(doge,index) in dogeList" :key="index"></dogeCard>
             </div>
         </Content>
     </Layout>

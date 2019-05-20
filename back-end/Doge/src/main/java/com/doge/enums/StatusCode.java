@@ -52,6 +52,17 @@ public enum StatusCode {
     PASSWORD_ERROR(10003, "密码错误"),
 
     /**
+     * 账号未激活
+     */
+    USER_NOT_ACTIVE(10005, "账号未激活"),
+
+    /**
+     * 账号被封禁
+     */
+    USER_BAN(10006, "账号被封禁"),
+
+
+    /**
      * 文件为空
      */
     FILE_EMPTY(10004, "文件为空"),

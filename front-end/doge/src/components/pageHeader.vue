@@ -29,7 +29,7 @@
                                         </Input>
                                     </FormItem>
                                     <FormItem prop="age" label="年龄">
-                                        <Input type="text" v-model="dogData.age" placeholder="年龄">
+                                        <Input v-model="dogData.age" placeholder="年龄">
                                         </Input>
                                     </FormItem>
                                     <FormItem prop="sex" label="性别">
@@ -123,16 +123,19 @@
                 loading: true,
                 dogValidate: {
                     dogName: [
-                        { required: true, message: '姓名不能为空', trigger: 'blur' }
+                        { required: true, message: '昵称不能为空', trigger: 'blur' },
+                        { type: 'string', max: 20, message: '昵称不能大于20个字符', trigger: 'blur' }
                     ],
                     age: [
                         { required: true, message: '年龄不能为空', trigger: 'blur' },
+                        { min:0, max: 100, message: '年龄在1-100之间', trigger: 'blur' }
                     ],
                     sex: [
                         { required: true, message: '性别不能为空', trigger: 'blur' },
                     ],
                     address: [
                         { required: true, message: '地址不能为空', trigger: 'blur' },
+                        { type: 'string',min:5, max: 100, message: '地址在5-100个字符之间', trigger: 'blur' }
                     ],
                     vaccine: [
                         { required: true, message: '疫苗不能为空', trigger: 'blur' },
@@ -142,6 +145,7 @@
                     ],
                     dogDescribe: [
                         { required: true, message: '描述不能为空', trigger: 'blur' },
+                        { type: 'string', min:50, max: 200, message: '描述在50-200个字符之间', trigger: 'blur' }
                     ]
                 }
             }

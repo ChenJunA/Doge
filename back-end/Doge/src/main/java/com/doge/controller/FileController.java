@@ -35,8 +35,8 @@ public class FileController extends BaseController {
             @ApiImplicitParam(name = "dogId", value = "动物ID", required = true, dataType = "Long")
     })
     @PostMapping("/dogPicsUpload")
-    public RespUtil<User> dogPicsUpload(MultipartFile file, Long articleId) throws Exception {
-        fileService.dogPicsUpload(file, articleId);
+    public RespUtil<User> dogPicsUpload(MultipartFile file, Long dogId) throws Exception {
+        fileService.dogPicsUpload(file, dogId);
         return RespUtil.success();
     }
 
